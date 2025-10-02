@@ -1,0 +1,53 @@
+
+# == Build =======================================
+- - - - - - - - - - - - - - - - - - - - - - - -
+ > sudo docker build -t image_name .
+- - - - - - - - - - - - - - - - - - - - - - - -
+
+-> vous pouvez changer "image_name" par n'importe quel nom.
+-> "." correspond au path pour trouver le Dockerfile,
+ici c'est le dossier courant car on lance la commande au même endroit que le Dockerfile.
+
+
+# == Run =========================================
+- - - - - - - - - - - - - - - - - - - - - - - -
+ > sudo docker run --rm -p 5014:5014 -it image_name
+- - - - - - - - - - - - - - - - - - - - - - - -
+
+-> mettez le nom exacte de l'image mise dans le build juste avant.
+-> mettez le port correspondant au service.
+-> -it: interactive mode
+
+- - - - - - - - - - - - - - - - - - - - - - - -
+sudo docker run -it image_name /bin/sh
+- - - - - - - - - - - - - - - - - - - - - - - -
+-> run l'image en mode interactive + lance un shell
+pour pouvoir naviguer dans les fichiers du container.
+
+
+# == Clean =======================================
+
+show memory use of Docker :
+- - - - - - - - - - - - - - - - - - - - - - - -
+ > sudo docker system df
+- - - - - - - - - - - - - - - - - - - - - - - -
+
+show images id :
+- - - - - - - - - - - - - - - - - - - - - - - -
+ > sudo docker images
+- - - - - - - - - - - - - - - - - - - - - - - -
+
+rm image by name or id :
+- - - - - - - - - - - - - - - - - - - - - - - -
+ > sudo docker rmi 386a37515beb
+- - - - - - - - - - - - - - - - - - - - - - - -
+
+clear cache :
+- - - - - - - - - - - - - - - - - - - - - - - -
+ > sudo docker builder prune -f -a
+- - - - - - - - - - - - - - - - - - - - - - - -
+
+delete everything : (container, images, volumes and cache)
+- - - - - - - - - - - - - - - - - - - - - - - -
+ > sudo docker system prune -a --volumes
+- - - - - - - - - - - - - - - - - - - - - - - -

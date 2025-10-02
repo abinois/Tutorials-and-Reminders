@@ -1,0 +1,117 @@
+#############################################################################
+#                   ------        /  /       ||  ||                         #
+#                      / /       (  (        ||__||                         #
+#                     / /          )  )      ||--||                         #
+#                    ------       /  /       ||  ||                         #
+#############################################################################
+
+
+print -Pn "\e]0;💤💰🏨\a"                                        # Change shell window header
+autoload -U colors && colors                                    # Load colors
+
+# -- P R O M P T --
+autoload -Uz vcs_info                                           # Load version control information
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '[%F{red}%b%f]'                # Format for git branch
+setopt PROMPT_SUBST
+PROMPT='🌶 %F{green}%U%n%u %f: %F{magenta}%B%~%b%f '            # Prompt customization : username and working directory full path
+RPROMPT='${vcs_info_msg_0_}[%F{yellow}%w%f/%F{green}%T%f]'      # Left prompt customization : Git branch, date, hour
+
+# - - - - - - - - - - - - - - - - - A L I A S - - - - - - - - - - - - - - - - -
+
+# -- S H E L L --
+alias ..="cd .."                                                # Go to parent directory
+alias ...="cd ../.."                                            # Go to grand-parent
+alias c="clear"                                                 # Clear terminal
+alias 4e="cat -e"                                               # Show special characters
+export GREP_COLOR=32                                            # Set grep match color to green
+alias grep="grep --color=always -Hnr"                           # Set grep options : color, file, line
+
+# -- P Y T H O N --
+alias p="python3.11"                                            # Python latest version
+alias pip="pip3"                                                # Use pip3 as default
+
+# -- G I T --
+alias gs="git status"                                           # Display tracked files
+alias ga="git add"                                              # Stage files
+alias gap="git add . && git status"                             # Stage current directory + git status
+alias gall="git add -A && git status"                           # Stage all branch + git status
+alias gcl="git clone"                                           # Clone repository
+alias gcm="git commit -m"                                       # Commit staged files with message
+alias gpl="git pull"                                            # Pull from repository
+alias gph="git push"                                            # Push to repository
+alias gpb="git push --set-upstream origin"                      # Push onto specific branch
+alias gb="git branch"                                           # Create branch
+alias gck="git checkout"                                        # Unstage files
+
+# -- L S --
+alias l="ls -FG"                                                # Set ls with color
+alias lr="ls -RFG"                                              # Set ls with recursive and color
+alias la="ls -AFG"                                              # Set ls with color + show dot files
+alias ll="ls -lAhFG"                                            # Show dot files and more infos with color
+
+# -- M A K E --
+alias mfc="make fclean"                                         # rm .o, .d and exe
+alias mc="make clean"                                           # rm .o and .d
+alias mk="make"                                                 # compile
+
+# -- V E R B O S E --
+for c in cp rm chmod mkdir mv; do                               # Put in verbose mode all those commands
+        alias $c="$c -v"
+done
+
+# - - - - - - - - - - - -  - - C O M P L E T I O N - - - - - - - - - - - - - - -
+autoload -U compinit
+compinit
+zmodload -i zsh/complist                                        # Load completion
+
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' menu select=2                            # Active menu
+zstyle ':completion:*:kill:*' force-list always                 # Force show menu
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensitive
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' rehash true                              # Hashes before completion
+zstyle ':completion:*' verbose yes                              # Unable verbose informations
+zstyle ':completion:*' auto-description                         # Gives info on command flags
+zstyle ':completion:*' group-name ''                            # Show tags groups
+zstyle ':completion:*:default' list-colors 'di=38;5;226'        # Tags color
+zstyle ':completion:*:messages' format $'%F{yellow}%d%f'
+zstyle ':completion:*:descriptions' format '%F{cyan}[ -> %d <- ]%f'
+zstyle ':completion:*:warnings' format '%F{red}No match :(%f'
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %s
+zstyle ':completion:*:*' group-order local-directories executable-files aliases builtins
+
+# -- O P T I O N S --
+setopt auto_menu
+setopt auto_cd
+setopt correct
+setopt hash_list_all
+setopt completealiases
+setopt list_ambiguous
+setopt always_to_end
+setopt complete_in_word
+setopt no_case_glob
+unsetopt glob_dots
+setopt extended_glob
+setopt auto_remove_slash
+
+# -- NO SOUND ! --
+unsetopt beep
+unsetopt hist_beep
+unsetopt list_beep
+unsetopt hup
+
+# ------------ H I S T O R I C -------------
+HISTFILE=~/.zsh_history
+HISTSIZE=2048
+SAVEHIST=2048
+
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt hist_reduce_blanks
+unsetopt hist_ignore_space
+setopt HIST_VERIFY
+setopt append_history
+setopt SHARE_HISTORY
+setopt inc_append_history

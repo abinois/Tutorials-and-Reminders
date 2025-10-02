@@ -1,0 +1,207 @@
+## ======================== Afficher ========================
+# --- Afficher les tables
+SELECT * FROM sqlite_schema
+WHERE type = 'table';  # <-- fonctionne pour SQLite
+
+# --- Afficher tout dans le tableau `table`
+SELECT *
+FROM table;
+
+# --- peut s'écrire sur une ligne
+SELECT * FROM table;
+
+# --- Afficher la colonne `price`
+SELECT price FROM table;
+
+# --- Afficher les valeurs de la colonne `price` sans doublons
+SELECT DISTINCT price FROM table;
+
+# --- Afficher les 2 colonnes `price` et `country`
+SELECT price, country FROM table;
+
+## ======================== Variable ========================
+# --- Passer une variable à la requête
+SELECT * FROM table WHERE price <= ?; # <-- `?` est la variable
+
+## ======================== Aliaser ========================
+# --- Aliaser les colonnes
+SELECT price AS p, country AS c FROM table;
+
+# --- Aliaser les tables
+SELECT t1.name, t2.age
+FROM table1 AS t1
+INNER JOIN table2 AS t2
+	ON t1.id = t2.id
+WHERE t1.name LIKE '%a';
+
+## ======================== Ordonner ========================
+# --- Ordonner par ordre croissantS
+SELECT * FROM table
+ORDER BY price ASC;  # <-- par défaut
+
+# --- Ordonner par ordre décroissant
+SELECT * FROM table
+ORDER BY price DESC;
+
+## ======================== Grouper ========================
+SELECT score, COUNT(*) AS occurence
+FROM table
+GROUP BY score;  # <-- compte les éléments regroupés par score
+
+## ======================== Filtrer ========================
+# --- Filtrer égal
+SELECT * FROM table WHERE country = 'France';  # <-- simples quotes en SQL
+
+# --- Filtrer égal
+SELECT * FROM table WHERE price = 2;
+
+# --- Filtrer différent
+SELECT * FROM table WHERE price <> 2;
+
+# --- Filtrer inférieur égal
+SELECT * FROM table WHERE price <= 2;
+
+# --- Filtrer supérieur égal
+SELECT * FROM table WHERE price >= 2;
+
+# --- Filtrer BETWEEN (start et end inclus)
+SELECT * FROM table WHERE price BETWEEN 1 AND 10; # <-- uniquement pour les valeurs numeriques
+
+# --- Filtrer IN
+SELECT * FROM table WHERE price IN (2, 5, 13):
+
+SELECT * FROM table WHERE status IN ('info', 'done', 'debug');
+
+# --- Filter LIKE / pattern text
+SELECT * FROM table WHERE name LIKE '%s';  <-- 's' tout seul, ou se terminant par 's'
+
+# --- Filtrer AND
+SELECT * FROM table
+WHERE price BETWEEN 1 AND 10
+AND status IN ('info', 'done', 'debug');
+
+# --- Filtrer OR
+SELECT * FROM table
+WHERE price BETWEEN 1 AND 10
+OR status IN ('info', 'done', 'debug');
+
+# --- Filtrer NOT
+SELECT * FROM table
+WHERE price NOT BETWEEN 1 AND 10
+OR status NOT IN ('info', 'done', 'debug');
+
+# --- Filtrer NULL
+SELECT * FROM table
+WHERE score IS NULL;
+
+# --- Filtrer les groupes : HAVING
+SELECT score, COUNT(*) AS occurence
+FROM table
+GROUP BY score
+HAVING occurence <> 1;  # <-- HAVING est comme un WHERE mais pour les groupes
+
+## ======================== Joins ========================
+# --- INNER JOIN : seulement les éléments correspondants entre les 2 tables
+SELECT * FROM table1
+INNER JOIN table2
+	ON table1.name = table2.id;  # <-- condition d'alignement des tables
+
+# --- LEFT JOIN : tous les éléments de la table de gauche + ceux correspondants entre les 2 tables
+SELECT * FROM table1  # <-- table de gauche
+LEFT JOIN table2  # <-- table de droite
+	ON table1.name = table2.id;
+
+# --- RIGHT JOIN : tous les éléments de la table de droite + ceux correspondants entre les 2 tables
+SELECT * FROM table1
+RIGHT JOIN table2
+	ON table1.name = table2.id;
+
+# --- FULL OUTER JOIN : tous les éléments des 2 tables
+SELECT * FROM table1
+FULL OUTER JOIN table2
+	ON table1.name = table2.id;
+
+## ======================== Éditer ========================
+# --- Insérer une ligne
+INSERT INTO table(price, country)  # <-- nom des colonnes dans l'ordre
+VALUES(3, "France");  # <-- doubles quotes3
+
+# --- Insérer une colonne `floor`
+ALTER TABLE table
+ADD floor int;
+
+# --- Supprimer une colonne `floor`
+ALTER TABLE table
+DROP COLUMN floor;
+
+# --- Supprimer une table
+DROP TABLE table;
+
+# --- Supprimer tout
+DELETE FROM table;
+
+# --- Supprimer des lignes avec une condition
+DELETE FROM table
+WHERE price < 10;
+
+# --- Rename la colonne `floor` en `etage`
+ALTER TABLE table
+RENAME floor TO etage;
+
+# --- Update des lignes avec condition
+UPDATE table SET price = 4
+WHERE country = 'France';
+
+# --- Créer une table
+CREATE TABLE table (
+	floor INTEGER,
+	humidity REAL,  # <-- float
+	company TEXT,
+);
+INSERT INTO table (floor, humidity, company, checked) VALUES (1, 13.50, 'Fnac');
+INSERT INTO table (floor, humidity, company, checked) VALUES (2, 27.80, 'Netflix');
+
+# --- Vérifier que la table n'existe pas avant de la créer
+CREATE TABLE IF NOT EXISTS table (
+	floor INTEGER,
+	humidity REAL,  # <-- float
+	company TEXT,
+);
+
+## ======================== Fonctions ========================
+# --- Minimum
+SELECT MIN(score) FROM table;
+
+# --- Maximum
+SELECT MAX(score) FROM table;
+
+# --- Moyenne
+SELECT AVG(score) FROM table;
+
+# --- Somme
+SELECT SUM(score) FROM table;
+
+# --- Nombre d'éléments dans une ligne
+SELECT COUNT(score) FROM table;
+SELECT COUNT(DISTINCT score) FROM table;  # <-- sans doublons
+
+# --- Nombre de lignes + alias
+SELECT COUNT(*) AS line_number FROM table;
+
+## ======================== Sous Requête ========================
+SELECT * FROM table1
+WHERE score >
+(
+	SELECT AVG(total)
+	FROM table2
+	WHERE total BETWEEN 0 AND 100
+);
+
+SELECT name AS pdg_name
+FROM table1
+WHERE company_name IN
+(
+	SELECT company
+	FROM table2
+	WHERE activity LIKE '%service%'
+);

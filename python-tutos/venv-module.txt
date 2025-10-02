@@ -1,0 +1,40 @@
+- - - - - - - - - - - - - - - -
+# Créer un environement virtuel :
+
+>  python -m venv <environment name>
+
+ex: python -m venv env
+note: Le nom "env" est conventionnellement utilisé
+pour les environements virtuels.
+
+- - - - - - - - - - - - - - - -
+# Activer un environement virtuel :
+
+>  source <environment name>/bin/activate
+
+ex: source env/bin/activate
+note: Fonctionne aussi pour changer d'environement
+virtuel. Pour basculer sur un autre, il suffit d'activer
+le deuxième, ce qui quittera automatiquement le premier.
+
+- - - - - - - - - - - - - - - -
+# Désactiver l'environement virtuel en cours :
+
+>  deactivate
+
+- - - - - - - - - - - - - - - -
+# Supprimer un environement virtuel :
+
+>  rm -r <environment name>/
+
+ex: rm -r env/
+
+- - - - - - - - - - - - - - - -
+# Générer automatiquement le fichier requirements :
+
+>  pip freeze > requirements.txt
+
+- - - - - - - - - - - - - - - -
+# Installer tous les paquets requis :
+
+>  pip install -r requirements.txt

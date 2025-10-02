@@ -1,0 +1,73 @@
+
+====== Configuration ======
+
+### Display configuration
+> git config --list
+
+### Identity
+> git config --global user.name "John Doe"
+> git config --global user.email johndoe@example.com
+
+### Colors
+> git config --global color.diff auto
+> git config --global color.status auto
+> git config --global color.branch auto
+
+### Editor
+> git config --global core.editor notepad++
+> git config --global merge.tool vimdiff
+
+### Default initial branch name
+git config --global init.defaultBranch <name>
+
+
+====== B A S I C S ==============
+### Initialisation - - - - - - - -
+git init						// init current directory as git repository
+git remote add <name> <url>		// link local repository to distant repository
+git clone						// clone distant repository
+git pull						// get changes from distant repository
+
+### Info - - - - - - - - - - - - -
+git status						// show tracking/staging and changes informations
+git log							// display last commits
+git reflog						// display last commits and other actions (merge, reset, etc.)
+git branch						// list all branches
+git stash list					// display all saved changes
+git blame <filename>			// display modifications of a file, line by line (with date, author, etc.)
+
+### Modify - - - - - - - - - - - -
+git add <filename>				// stage file
+git add -p						// add part of file changes (patch)
+git add -A						// stage all branch
+git add .						// stage current directory
+git commit -m					// stage tracked files
+git commit --amend --no-edit	// add staged files to last commit (if you forgot to add them)
+git push						// push staged changes to repository
+git push --set-upstream origin <branchname>	// push to specific branch
+
+### Undo - - - - - - - - - - - - -
+git checkout					// undo all modifications
+git checkout <filename>			// undo modifications
+git reset HEAD <filename>		// untrack file
+git reset --hard HEAD^			// undo last commit on current branch and return to previous commit state (delete permanently !)
+git reset --hard ca83a6df		// apply the removed commit with hash ca83a6df on current branch
+git reset --mixed HEAD~			// undo last commit but don't delete changes, just unstage them instead
+git reset --soft				// go to specific commit state without deleting anything
+git revert HEAD^				// undo last commit by creating a new one (safe : no historic modifications)
+git commit --amend -m <new message> // change message of last commit
+git checkout <commit_ID>		// return to that specific commit state
+git rebase						//
+
+### Branch - - - - - - - - - - - -
+git checkout <branchname>		// change branch
+git branch <branchname>			// create new branch
+git branch -d <branchname>		// delete branch (-D to force)
+git merge <branchname>			// merge branchname into current branch
+git cherry-pick d356940 de966d4 // merge only specific commits (but duplicate them)
+
+### Save - - - - - - - - - - - - -
+git stash						// save changes and return to a clean branch
+git stash apply stash@{3}		// apply changes saved in stash number 3
+
+git fetch						//

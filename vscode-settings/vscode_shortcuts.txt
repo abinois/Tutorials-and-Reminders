@@ -1,0 +1,27 @@
+======= Personal setup:
+workbench.action.terminal.focus				-> cmd + t	(remove When clause)
+workbench.action.focusActiveEditorGroup		-> cmd + e
+editor.action.indentLines					-> alt + right arrow
+editor.action.outdentLines					-> alt + left arrow
+editor.action.moveLinesDownAction			-> alt + down arrow
+editor.action.moveLinesUpAction				-> alt + up arrow
+editor.action.commentLine					-> cmd + /	(also works for uncommenting line, or lines)
+editor.action.indentationToTabs				-> ctrl + cmd + t
+editor.action.indentationToSpaces			-> ctrl + cmd + s
+
+======= Default keyboard shortcuts:
+workbench.action.openGlobalKeybindings		-> cmd + k cmd + s
+workbench.action.files.save					-> cmd + s
+workbench.action.killEditor					-> cmd + w
+workbench.action.togglePanel				-> cmd + j
+actions.find								-> cmd + f
+editor.action.addSelectionToNextFindMatch	-> cmd + d
+editor.action.insertLineAfter				-> cmd + enter
+cursorEnd									-> cmd + right arrow
+cursorHome									-> cmd + left arrow
+cursorWordPartRight							-> ctrl + alt + right arrow
+cursorWordPartLeft							-> ctrl + alt + left arrow
+workbench.action.terminal.split				-> cmd + \	(When terminalFocus)
+workbench.action.splitEditor				-> cmd + \
+workbench.action.focusFirstEditorGroup		-> cmd + 1	(works with 2, 3... depending on how many windows are opened)
+workbench.action.openEditorAtIndex1			-> ctrl + 1	(works with 2, 3... depending on how many tabs are opened)

@@ -1,0 +1,88 @@
+=== ENVIRONMENT ==========
+$SHELL					// current shell
+cat /etc/shells			// list of available shells
+$PS1					// current prompt customization
+$PWD					// current directory
+$OLDPWD					// previous directory
+$PATH					// paths
+$HOME					// current user home directory
+$USER					// current user name
+
+=== SPECIAL VARIABLES ====
+$$						// process ID
+$?						// exit status of last command (0 if no error)
+$!						// process ID of last background job
+$RANDOM					// random number
+
+#!/bin/bash				// fisrt line in a shell script : specify to the OS which shell to use (called the shebang line)
+
+=== PERMISSIONS ==========
+chmod +x script.sh		// add execution permission to everyone for script.sh
+chmod 700 script.sh 	// add all permissions to owner and none to everybody else
+permission order : owner, group, other | read, write, execute
+
+=== MULTI COMMANDS =======
+command1; command2		// command2 runs regardless of command1 success
+command1 && command2	// command2 runs only if command1 succeeds
+command1 || command2	// command2 runs only if command1 fails
+\						// For multiline commands, long commands needing to be cut by continuing on another line
+
+=== REDIRECTION ==========
+>						// This takes the output from the preceding command that you’d normally see in the terminal and sends it to a file that you give it
+ex: pip freeze > requirements.txt
+<						// This takes the content of a file and sends it as input to a command
+ex: pbcopy < ~/Desktop/folder/file.txt
+>>						// Append to file : will not overwrite
+|						// A pipe takes the standard output of one command and passes it as the input to another.
+ex: wc -l file1.txt|tee -a file2.txt
+
+=== BASIC COMMANDS =======
+man						// show command manual
+pwd						// print working directory
+basename				// return file (or directory) name without path
+whoami					// show current user
+cd						// change directory
+ls						// list directory
+cp mv rm				// copy move remove
+touch mkdir				// create file, create directory
+echo					// display in console
+printf					// display in console with formating options
+tee						// copies standard input to standard output, making a copy in zero or more files
+cat less more			// show file content
+head					// displays the first 10 lines of a file
+tail					// displays the last 10 lines of a file
+ipconfig				// view and control IP configuration state
+df						// show disk free space
+du						// show disk usage
+diff					// show differences between to files
+chmod					// change permissions
+env						// show environment variables
+export					// export a variable as an environment variable
+set						// show all variables and functions
+unset					// remove variable
+sudo					// super user do
+wc						// word count
+sed						// stream editor
+exit					// exit terminal or log out ssh conexion
+clear					// clear terminal
+history					// show recently used commands
+kill					// kill process
+ps						// process status
+curl					// transfer data from or to a server
+sleep					// delay process execution
+date					// show current date
+
+=== LINUX ================
+apt-get install			// install package
+apt-get uninstall		// uninstall package
+apt-get update			// download last version of packages
+apt-get upgrade			// install last version of packages
+apt-cache search		// browse for available packages matching the research
+lsblk					// show informations about devices (RAM, hard disk, screen, keyboard etc.)
+wget					// download files from web
+
+=== PYTHON ===============
+pip install				// install python module
+pip show				// show informations on package
+pip freeze				// show installed packages
+venv					// create virtual environment
