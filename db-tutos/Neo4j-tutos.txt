@@ -1,7 +1,7 @@
 address 	= 'http://a3b361dd80d5847d18e2dda525a7a0c9-1846686815.eu-west-3.elb.amazonaws.com:7474/browser/'
 username 	= 'neo4j'
-password 	= "rsfYhms3FK8D3KUw"
-project_id 	= "62c6a7ff9df06a0031f4229e" # ICEBERG
+password 	= ""
+project_id 	= ""
 
 
 create_unique = """CREATE CONSTRAINT n10s_unique_uri ON (r:Resource)
@@ -18,39 +18,39 @@ load_file	= """CALL n10s.rdf.import.fetch("file://<filepath>","Turtle", {
 # clear everything
 'match (n) detach delete n'
 # clear nodes by project
-'match (p: Project {project_id: "62c6a7ff9df06a0031f4229e"})-[*]-(n) detach delete n'
+'match (p: Project {project_id: "xxxxxx"})-[*]-(n) detach delete n'
 # clear nodes by document
 'match (d {document_id: "doc_1"})-[*]-(n) detach delete d, n'
 
 # show everything
 'match (n) return (n)'
 # show everything by project
-'match (p: Project {project_id: "62c6a7ff9df06a0031f4229e"})-[*]-(n) return p, n'
+'match (p: Project {project_id: "xxxxxx"})-[*]-(n) return p, n'
 # show documents by project
-'match (p: Project {project_id: "62c6a7ff9df06a0031f4229e"})<--(d: Document) return p, d'
+'match (p: Project {project_id: "xxxxxx"})<--(d: Document) return p, d'
 # show nodes by project
-'match (p: Project {project_id: "62c6a7ff9df06a0031f4229e"})<--(d: Document)-[*]-(n) return p, d, n'
+'match (p: Project {project_id: "xxxxxx"})<--(d: Document)-[*]-(n) return p, d, n'
 # show nodes by project + limit
-'match (p: Project {project_id: "62c6a7ff9df06a0031f4229e"})<--(d: Document)-[*]-(n) return p, d, n limit 500'
+'match (p: Project {project_id: "xxxxxx"})<--(d: Document)-[*]-(n) return p, d, n limit 500'
 # show nodes by project by document + limit
-'match (p: Project {project_id: "62c6a7ff9df06a0031f4229e"})<--(d: Document {document_id: "doc_1"})-[*]-(n) return p, d, n limit 500'
+'match (p: Project {project_id: "xxxxxx"})<--(d: Document {document_id: "doc_1"})-[*]-(n) return p, d, n limit 500'
 # show cards by project by document
-'match (p: Project {project_id: "62c6a7ff9df06a0031f4229e"})<--(d: Document {document_id: "doc_1"})<-[*]-(c: Card) return p, d, c'
+'match (p: Project {project_id: "xxxxxx"})<--(d: Document {document_id: "doc_1"})<-[*]-(c: Card) return p, d, c'
 # show cards with lemma in list by project by document
-'match (p: Project {project_id: "62c6a7ff9df06a0031f4229e"})<--(d: Document {document_id: "doc_1"})<-[*]-(c: Card) where l.lemma in ["gun dish", "radar"] return p, d, c'
+'match (p: Project {project_id: "xxxxxx"})<--(d: Document {document_id: "doc_1"})<-[*]-(c: Card) where l.lemma in ["abcd", "efgh"] return p, d, c'
 # show cards with specific lemma by project by document
-'match (p: Project {project_id: "62c6a7ff9df06a0031f4229e"})<--(d: Document {document_id: "doc_4"})-[*]-(c: Card {lemma: "gun dish"}) return p, d, c'
+'match (p: Project {project_id: "xxxxxx"})<--(d: Document {document_id: "doc_4"})-[*]-(c: Card {lemma: "abcd"}) return p, d, c'
 # show cards and their direct attributes by document
-'match (d: Document {document_id: "b8b35ab8-2790-4a73-96c8-b025941c0c84|1664971921326"})<--(c: Card)-->(a: Attribute) return d, c, a'
+'match (d: Document {document_id: "xxxxx"})<--(c: Card)-->(a: Attribute) return d, c, a'
 # show cards and their events by document
-'match (d: Document {document_id: "b8b35ab8-2790-4a73-96c8-b025941c0c84|1664971921326"})<--(c: Card)-->(e: Event)-->(o) return d, c, e, o'
+'match (d: Document {document_id: "xxxxx"})<--(c: Card)-->(e: Event)-->(o) return d, c, e, o'
 # show cards and their taste by document
-'match (d: Document {document_id: "b8b35ab8-2790-4a73-96c8-b025941c0c84|1664971921326"})<--(c: Card)-->(t: Taste)-->(o) return d, c, t, o'
+'match (d: Document {document_id: "xxxxx"})<--(c: Card)-->(t: Taste)-->(o) return d, c, t, o'
 # show cards and their possession by document
-'match (d: Document {document_id: "b8b35ab8-2790-4a73-96c8-b025941c0c84|1664971921326"})<--(c: Card)-->(p: Possessing)-->(o) return d, c, p, o'
+'match (d: Document {document_id: "xxxxx"})<--(c: Card)-->(p: Possessing)-->(o) return d, c, p, o'
 # show cards and their heritage by document
-'match (d: Document {document_id: "b8b35ab8-2790-4a73-96c8-b025941c0c84|1664971921326"})<--(c: Card)<-->(h: Heritage)<-->(o) return d, c, h, o'
+'match (d: Document {document_id: "xxxxx"})<--(c: Card)<-->(h: Heritage)<-->(o) return d, c, h, o'
 # show cards and their social link by document
-'match (d: Document {document_id: "b8b35ab8-2790-4a73-96c8-b025941c0c84|1664971921326"})<--(c: Card)<-->(s: Social)<-->(o) return d, c, s, o'
+'match (d: Document {document_id: "xxxxx"})<--(c: Card)<-->(s: Social)<-->(o) return d, c, s, o'
 # show cards and their link by document
-'match (d: Document {document_id: "b8b35ab8-2790-4a73-96c8-b025941c0c84|1664971921326"})<--(c: Card)<-->(l: Link)<-->(o) return d, c, l, o'
+'match (d: Document {document_id: "xxxxx"})<--(c: Card)<-->(l: Link)<-->(o) return d, c, l, o'
