@@ -1,0 +1,5 @@
+=== PYTHON ===============
+pip install				// install python module
+pip show				// show informations on package
+pip freeze				// show installed packages
+venv					// create virtual environment

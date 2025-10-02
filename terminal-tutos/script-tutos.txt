@@ -1,0 +1,7 @@
+#!/bin/bash				// fisrt line in a shell script : specify to the OS which shell to use (called the shebang line)
+
+=== SPECIAL VARIABLES ====
+$$						// process ID
+$?						// exit status of last command (0 if no error)
+$!						// process ID of last background job
+$RANDOM					// random number

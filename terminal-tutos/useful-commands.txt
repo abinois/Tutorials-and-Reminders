@@ -1,9 +1,6 @@
 ### Kill processes running on a specific port, here : 3010
 > kill -9 $(lsof -t -i:3010)
 
-### Run script.sh with additional environment variables without afecting the current shell
-> env VAR1="value1" VAR2="value2" ./script.sh
-
 ### Generate SSH keys
 > ssh-keygen
 

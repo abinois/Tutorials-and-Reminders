@@ -1,0 +1,8 @@
+=== LINUX ================
+apt-get install			// install package
+apt-get uninstall		// uninstall package
+apt-get update			// download last version of packages
+apt-get upgrade			// install last version of packages
+apt-cache search		// browse for available packages matching the research
+lsblk					// show informations about devices (RAM, hard disk, screen, keyboard etc.)
+wget					// download files from web

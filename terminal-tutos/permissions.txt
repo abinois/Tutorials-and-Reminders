@@ -1,0 +1,15 @@
+=== PERMISSIONS ==========
+permission order : owner, group, other | read, write, execute
+
+chmod +x script.sh		// add execution permission to everyone for script.sh
+chmod 700 script.sh 	// add all permissions to owner and none to everybody else
+chmod 755 script.sh 	// add all permissions to owner and read + run to everybody else
+chmod 744 script.sh 	// add all permissions to owner and read only to everybody else
+
+1 -> 001 : execute
+2 -> 010 : write
+3 -> 011 : write + execute
+4 -> 100 : read
+5 -> 101 : read + execute
+6 -> 110 : read + write
+7 -> 111 : read + write + execute

@@ -1,0 +1,17 @@
+=== REDIRECTION ==========
+
+>
+### This takes the output from the preceding command and sends it to a given file.
+ex: pip freeze > requirements.txt
+
+>>
+### Append to file : will not overwrite
+ex: echo "# My new repository" >> README.md
+
+<
+### This takes the content of a file and sends it as input to a command
+ex: pbcopy < ~/Desktop/folder/file.txt
+
+|
+### A pipe takes the standard output of one command and passes it as the input to another.
+ex: wc -l file1.txt|tee -a file2.txt

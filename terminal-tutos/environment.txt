@@ -1,0 +1,10 @@
+=== ENVIRONMENT ==========
+$SHELL					// current shell
+cat /etc/shells			// list of available shells
+$PS1					// current prompt customization
+$PWD					// current directory
+$OLDPWD					// previous directory
+$PATH					// paths
+$HOME					// current user home directory
+$USER					// current user name
+env VAR1="value1" VAR2="value2" ./script.sh // Run script.sh with additional environment variables without afecting the current shell
