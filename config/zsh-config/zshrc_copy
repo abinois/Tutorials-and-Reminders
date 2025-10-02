@@ -23,7 +23,6 @@ RPROMPT='${vcs_info_msg_0_}[%F{yellow}%w%f/%F{green}%T%f]'      # Left prompt cu
 alias ..="cd .."                                                # Go to parent directory
 alias ...="cd ../.."                                            # Go to grand-parent
 alias c="clear"                                                 # Clear terminal
-alias 4e="cat -e"                                               # Show special characters
 export GREP_COLOR=32                                            # Set grep match color to green
 alias grep="grep --color=always -Hnr"                           # Set grep options : color, file, line
 
