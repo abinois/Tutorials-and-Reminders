@@ -1,0 +1,32 @@
+@prefix d: <https://example.com/ontology/data/> .
+@prefix h: <https://example.com/ontology/class/Human> .
+@prefix l: <https://example.com/ontology/link/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://example.com/ontology/class/Human/1> a h: ;
+    rdfs:label "John" ;
+    skos:altLabel "Johnny" ;
+    d:hasFriendNumber 42 ;
+    l:hasFriend <https://example.com/ontology/class/Human/2>,
+        <https://example.com/ontology/class/Human/3> .
+
+d:hasFriendNumber a owl:DatatypeProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range xsd:string .
+
+l:hasFriend a owl:ObjectProperty ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing .
+
+<https://example.com/ontology/class/Human/2> a h: ;
+    rdfs:label "Jack" ;
+    skos:altLabel "Jacky" ;
+    l:hasFriend <https://example.com/ontology/class/Human/3> .
+
+<https://example.com/ontology/class/Human/3> a h: ;
+    rdfs:label "Jason" ;
+    skos:altLabel "Jay" .
+
