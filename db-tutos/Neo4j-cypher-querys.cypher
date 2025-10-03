@@ -37,4 +37,15 @@ MATCH (h1:Human {human_id: "xxxxxx"})-[:eat]->(a:Animal)<-[:eat]-(h2:Human {huma
 // Show all Human friends of a specific node that have The Beatles names
 MATCH (h:Human {human_id: "xxxxxx"})-[:hasFriend]->(f:Human) WHERE f.name IN ["John", "George", "Paul", "Ringo"] RETURN f;
 // Show the id of a node
-MATCH (p:Product) WHERE p.productName = "Queso Manchego La Pastora" RETURN elementId(p)
+MATCH (p:Product) WHERE p.productName = "Queso Manchego La Pastora" RETURN elementId(p);
+// Specific value
+MATCH (h:Human) WHERE h.name = "John" RETURN h;
+// With regex
+MATCH (h:Human) WHERE h.name =~ "J.*" RETURN h;
+// Comparison with numerical value
+MATCH (h:Human) WHERE h.age > 18 RETURN h;
+// Comparison with date
+MATCH (h:Human) WHERE h.birthday > date("2025-01-02") RETURN h;
+// Comparison with graph itself
+MATCH (h1:Human)--(h2:Human) WHERE NOT (h1)-[:hasFriend]->(h2) RETURN h1, h2;
+
