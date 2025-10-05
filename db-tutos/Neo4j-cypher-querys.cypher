@@ -1,3 +1,5 @@
+// Documentation : https://neo4j.com/docs/cypher-cheat-sheet/5/all/
+
 // create unique
 CREATE CONSTRAINT n10s_unique_uri FOR (r:Resource)
 REQUIRE r.uri IS UNIQUE;
@@ -28,6 +30,18 @@ MATCH (n) RETURN (n);
 MATCH (n) RETURN (n) LIMIT 200;
 // show all nodes attach to 1 specific node, with edges of any type and any direction
 MATCH (h:Human {human_id: "xxxxxx"})-[*]-(n) RETURN h, n;
+// on multiple lines
+MATCH (n:Human)
+WHERE n.human_id = "xxxxxx"
+AND n.age < 23
+RETURN n;
+// return a table of property instead of nodes
+MATCH (h:Human)-[:eat]->(a:Animal)
+WHERE a.label = "dog"
+RETURN h.name, h.locality, h.extinctionDate;
+// Bind a path pattern to a p variable, and return the path itself
+MATCH p = ()-[:ACTED_IN]->(:Movie)
+RETURN p;
 // show all human nodes targeting 1 specific human
 MATCH (h1:Human {human_id: "xxxxxx"})<--(h2:Human) RETURN h1, h2;
 // show all human nodes targeting 1 specific human, with an edge of type hasFriend
@@ -48,4 +62,8 @@ MATCH (h:Human) WHERE h.age > 18 RETURN h;
 MATCH (h:Human) WHERE h.birthday > date("2025-01-02") RETURN h;
 // Comparison with graph itself
 MATCH (h1:Human)--(h2:Human) WHERE NOT (h1)-[:hasFriend]->(h2) RETURN h1, h2;
-
+// Create a new node, sets a new property, and create a new relationship
+MERGE (h42:Human {human_id: "zzzzzz"})
+SET h42.name = "Francis"
+MERGE (h42)-[r:hasFriend]->(h1)
+RETURN h42, r, h1;

@@ -2,10 +2,16 @@ from neo4j import GraphDatabase
 
 # Dump RDF graph in Neo4j DB
 server_url = ""
-server_auth = ""
+server_auth = ("username", "password")
 with GraphDatabase.driver(server_url, auth=server_auth) as server:
+	# Check server connection
 	server.verify_connectivity()
-	serialized_rdf = "" # g.serialize()
-	query = "CALL n10s.rdf.import.inline('{}', \"Turtle\");".format(serialized_rdf)
-	response = server.execute_query(query, database_='neo4j')
-	print(response)
+	# Making a cypher query
+	query = "MATCH (h:Human) WHERE h.age > 18 RETURN h LIMIT 10"
+	# Execute cypher query
+	records, summary, keys = server.execute_query(query)
+	# Print results
+	for record in records:
+		print(record)
+	# Close connection
+	server.close()
