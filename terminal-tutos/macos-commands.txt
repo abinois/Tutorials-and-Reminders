@@ -1,0 +1,5 @@
+brew install <package>		// install package
+brew update					// download latest versions of packages
+brew upgrade				// install latest versions of packages
+brew outdated				// list outdated formulae
+brew list					// display all installed packages
