@@ -25,7 +25,7 @@ WHERE {													# <- WHERE clause as condition
 PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>		# <- Prefix declaration for shorter querys
 
 SELECT DISTINCT ?person									# <- DISTINCT to remove duplicates
-FROM <rdf graph url or path>							# <- FROM clause : specifies where the triple dataset is
+FROM <rdf graph url or path>							# <- FROM clause : specifies where the triple dataset is (multiple FROM statment will merge all datasets into 1 default graph)
 WHERE { ?person vcard:family-name "Smith" . }
 ORDER BY ?person										# <- ORDER BY to order results by a variable in particular
 OFFSET 2												# <- OFFSET clause : skip a certain number of results
@@ -267,8 +267,36 @@ WHERE {
 ORDER BY desc(?pop)
 
 -----------------------------------------------------
-# ->
+# -> Named graphs
+
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dc:  <http://purl.org/dc/elements/1.1/>
+PREFIX :    <.>											# <- Empty prefix for current directory
+
+SELECT *
+FROM       <ds-dft.ttl>									# <- The default graph
+FROM NAMED <ds-ng-1.ttl>								# <- Naming a graph
+FROM NAMED <ds-ng-2.ttl>								# <- Naming a second graph
+
+WHERE {
+	{ ?s ?p ?o }										# <- Querying the defaulkt graph
+	UNION
+	{ GRAPH ?g { ?s ?p ?o } }							# <- Querying all named graph because we use a variable ?g instead of a specific name
+}
+
 -----------------------------------------------------
-# ->
+# -> Query 1 specific named graph
+
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX : <.>
+
+SELECT ?title
+FROM       <ds-dft.ttl>									# <- The default graph
+FROM NAMED <ds-ng-1.ttl>								# <- Named but unsued
+FROM NAMED <ds-ng-2.ttl>
+
+WHERE {
+	GRAPH :ds-ng-2.ttl { ?b dc:title ?title }			# <- Specify on which graph the pattern will be applied, using the graph's name (which is an URI)
+}
+
 -----------------------------------------------------
-# ->
