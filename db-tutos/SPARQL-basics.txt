@@ -5,10 +5,17 @@ ARQ query engine : https://jena.apache.org/documentation/query/index.html
 
 - - - - - - - - - - - Execution - - - - - - - - - - -
 Execute query using Apache Jena ARQ engine :
-> bin/sparql --data=project/data/triples.rdf --query=project/queries/q1.rq
-> bin/arq --data=project/data/triples.rdf --query=project/queries/q1.rq
+> bin/sparql --data=project/data/triples.ttl --query=project/queries/q1.rq
+> bin/arq --data=project/data/triples.ttl --query=project/queries/q1.rq
 
 Execute online : https://atomgraph.github.io/SPARQL-Playground/
+
+- - - - - - - - - - - Query types - - - - - - - - - -
+SPARQL has four result forms :
+    SELECT – Return a table of results.
+    CONSTRUCT – Return an RDF graph, based on a template in the query.
+    DESCRIBE – Return an RDF graph, based on what the query processor is configured to return.
+    ASK – Ask a boolean query.
 
 - - - - - - - - - - - - Query - - - - - - - - - - - -
 -----------------------------------------------------
