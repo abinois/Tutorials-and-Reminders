@@ -24,12 +24,25 @@ WHERE {													# <- WHERE clause as condition
 
 PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>		# <- Prefix declaration for shorter querys
 
-SELECT ?person
-WHERE {
-	?person vcard:family-name "Smith" .
-}
+SELECT DISTINCT ?person									# <- DISTINCT to remove duplicates
+FROM <rdf graph url or path>							# <- FROM clause : specifies where the triple dataset is
+WHERE { ?person vcard:family-name "Smith" . }
 ORDER BY ?person										# <- ORDER BY to order results by a variable in particular
-LIMIT 10												# <- LIMIT clause to limit result number
+OFFSET 2												# <- OFFSET clause : skip a certain number of results
+LIMIT 10												# <- LIMIT clause : limit total result number
+
+-----------------------------------------------------
+# -> Do not have to repeat : use turtle shortcut syntax
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+
+SELECT *
+WHERE {
+	?person vcard:family-name ?familyName ;				# <- ';' semi colon for next property name with same subject
+			vcard:given-name ?givenName ;
+			vcard:language "English" ;
+			vcard:locality "Paris" ;
+			vcard:nickname "Jay" .						# <- '.' period at the end
+}
 
 -----------------------------------------------------
 # -> Same query but also returns the given name along the family name
@@ -41,7 +54,7 @@ WHERE {
 	?person vcard:family-name "Smith" .					# <- First triple pattern
 	?person vcard:given-name ?name .					# <- Second pattern applied on the result of the first one
 }
-ORDER BY DESC(?person)									# <- Descending ordering
+ORDER BY DESC(?person)									# <- Descending ordering (default is ASC())
 
 -----------------------------------------------------
 # -> Filter triples with FILTER clause
@@ -66,6 +79,37 @@ WHERE {
     ?resource info:age ?age .
     FILTER (?age >= 24)									# <- The arithmetic expression must be in parentheses
 }
+
+-----------------------------------------------------
+# -> Operator || &&
+PREFIX info: <http://somewhere/peopleInfo#>
+
+SELECT ?resource
+WHERE {
+    ?resource info:age ?age .
+    FILTER (?age >= 24 || ?age = 19)					# <- OR operator
+}
+
+-----------------------------------------------------
+# -> MIN() / MAX() / SUM() / AVG()
+PREFIX info: <http://somewhere/peopleInfo#>
+
+SELECT (MAX(?age) AS ?ageMax)							# <- MAX() to get maximum value and (... AS ...) to rename
+WHERE { ?resource info:age ?age . }
+
+identical as :
+
+SELECT ?age
+WHERE { ?ressource info:age ?age . }
+ORDER BY DESC(?age)
+LIMIT 1
+
+-----------------------------------------------------
+# -> COUNT()
+PREFIX info: <http://somewhere/peopleInfo#>
+
+SELECT COUNT(*)											# <- COUNT() to count occurences
+WHERE { ?resource info:age 24 . }
 
 -----------------------------------------------------
 # -> Make triples optional with the OPTIONAL clause
@@ -105,11 +149,28 @@ PREFIX sn: <http://www.snee.com/hr/>
 
 SELECT ?givenName ?familyName
 WHERE {
-	?person vcard:family-name ?familyName .
-	?person vcard:given-name ?givenName .
-	NOT EXISTS {										# <- NOT EXISTS clause : triple must not match
-		?person sn:completedOrientation ?orientDate .
-	}
+	?p vcard:family-name ?familyName .
+	?p vcard:given-name ?givenName .
+	NOT EXISTS { ?p sn:completedOrientation ?oDate . }	# <- NOT EXISTS clause : triple must not match
+}
+
+# identical as this query, using bound() and negation operator '!' :
+
+SELECT ?givenName ?familyName
+WHERE {
+	?p vcard:family-name ?familyName .
+	?p vcard:given-name ?givenName .
+	OPTIONAL { ?p sn:completedOrientation ?oDate . }
+	FILTER (!bound(?Date))								# <- Here, filter checks if ?oDate is NOT bound with a value
+}
+
+# identical as this query, using MINUS :
+
+SELECT ?givenName ?familyName
+WHERE {
+	?p vcard:family-name ?familyName .
+	?p vcard:given-name ?givenName .
+	MINUS { ?p sn:completedOrientation ?oDate . }		# <- MINUS clause : remove everything that matches these triples
 }
 
 -----------------------------------------------------
@@ -121,7 +182,7 @@ SELECT ?gName ?fName ?fullName							# <- The 'fullName' variable isn't matching
 WHERE {
 	?person vcard:family-name ?fName .
 	?person vcard:given-name ?gName .
-	BIND(CONCAT(?gName, " ", ?fName) AS ?fullName)		# <- Binds the result of concat() function to the 'fullName' variable
+	BIND(concat(?gName, " ", ?fName) AS ?fullName)		# <- Binds the result of concat() function to the 'fullName' variable
 }
 
 -----------------------------------------------------
@@ -135,7 +196,7 @@ CONSTRUCT {												# <- Generates new triples based on the result
 WHERE {
 	?person vcard:family-name ?fName .
 	?person vcard:given-name ?gName .
-	BIND(CONCAT(?gName, " ", ?fName) AS ?fullName)
+	BIND(concat(?gName, " ", ?fName) AS ?fullName)
 }
 
 -----------------------------------------------------
@@ -156,10 +217,12 @@ PREFIX vCard: <http://www.w3.org/2001/vcard-rdf/3.0#>
 
 SELECT ?name
 WHERE {
-   { [] foaf:name ?name } UNION { [] vCard:FN ?name }	# <- UNION will regroup all results of each triple pattern
+   { [] foaf:name ?name }
+   UNION												# <- UNION will regroup all results of each triple pattern as two indpendant queries
+   { [] vCard:FN ?name }
 }
 
-faster than this FILTER clause, but identical :
+# faster than this FILTER clause, but identical :
 
 SELECT ?name
 WHERE
@@ -168,9 +231,41 @@ WHERE
   FILTER ( ?p = foaf:name || ?p = vCard:FN )			# <- || is the OR operator
 }
 -----------------------------------------------------
-# ->
+# -> GROUP BY to return sub groups of results
+
+PREFIX info:        <http://somewhere/peopleInfo#>
+PREFIX vcard:      <http://www.w3.org/2001/vcard-rdf/3.0#>
+
+SELECT ?name											# <- Will return a list of names grouped by age, if age is over 50.
+WHERE {
+    ?person vcard:FN ?name .
+	?person info:age ?age .
+}
+GROUP BY ?age											# <- Will group results by age
+HAVING (?age > 50)										# <- HAVING clause is like a FILTER but for groups
+
 -----------------------------------------------------
-# ->
+# -> Nested subqueries : This calculates the population of each country in the world,
+# expressing the population as a percentage of the world's total population
+
+SELECT ?countryLabel ?pop (round(?pop/?worldpop*1000)/10 AS ?percent)
+WHERE {
+	?country wdt:P31 wd:Q3624078;    # is a sovereign state
+        	 wdt:P1082 ?pop.
+
+	{
+		# subquery to determine ?worldpop
+		SELECT (sum(?pop) AS ?worldpop)
+		WHERE {
+		?country wdt:P31 wd:Q3624078;    # is a sovereign state
+				 wdt:P1082 ?pop.
+		}
+	}
+
+	SERVICE wikibase:label {bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".}	# <- This will auto assign ?countryLabel with rdfs:label value for ?country
+}
+ORDER BY desc(?pop)
+
 -----------------------------------------------------
 # ->
 -----------------------------------------------------
