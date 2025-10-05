@@ -1,0 +1,177 @@
+- - - - - - - - - - Documentation - - - - - - - - - -
+Documentation : https://www.w3.org/TR/sparql11-query/
+List of SPARQL expressions and functions : https://en.wikibooks.org/wiki/SPARQL/Expressions_and_Functions
+ARQ query engine : https://jena.apache.org/documentation/query/index.html
+
+- - - - - - - - - - - Execution - - - - - - - - - - -
+Execute query using Apache Jena ARQ engine :
+> bin/sparql --data=project/data/triples.rdf --query=project/queries/q1.rq
+> bin/arq --data=project/data/triples.rdf --query=project/queries/q1.rq
+
+- - - - - - - - - - - - Query - - - - - - - - - - - -
+-----------------------------------------------------
+# -> Select all triples
+
+SELECT ?s ?p ?o											# <- SELECT clause to indicate which variable to return
+WHERE {													# <- WHERE clause as condition
+  ?subject ?predicate ?object .							# <- Triple pattern to match. Ends with '.' (last one is optional)
+}
+
+-----------------------------------------------------
+# -> Select all subject with a family name of "Smith"
+
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>		# <- Prefix declaration for shorter querys
+
+SELECT ?person
+WHERE {
+	?person vcard:family-name "Smith" .
+}
+ORDER BY ?person										# <- ORDER BY to order results by a variable in particular
+LIMIT 10												# <- LIMIT clause to limit result number
+
+-----------------------------------------------------
+# -> Same query but also returns the given name along the family name
+
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>		# <- Sandard for job description
+
+SELECT ?person ?name									# <- Here two variables will be returned
+WHERE {
+	?person vcard:family-name "Smith" .					# <- First triple pattern
+	?person vcard:given-name ?name .					# <- Second pattern applied on the result of the first one
+}
+ORDER BY DESC(?person)									# <- Descending ordering
+
+-----------------------------------------------------
+# -> Filter triples with FILTER clause
+
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX sn: <http://www.snee.com/hr/>					# <- Namespace of a specific company
+
+SELECT ?givenName ?familyName ?hiredDate				# <- Here, the 'person' variable is not returned
+WHERE {
+	?person vcard:family-name ?familyName .
+	?person vcard:given-name ?givenName .
+	?person sn:hd ?hiredDate .
+	FILTER(?hiredDate < "2020-01-01")					# <- FILTER clause to narrow results
+}
+
+-----------------------------------------------------
+# -> Arithmetic expressions
+PREFIX info: <http://somewhere/peopleInfo#>
+
+SELECT ?resource
+WHERE {
+    ?resource info:age ?age .
+    FILTER (?age >= 24)									# <- The arithmetic expression must be in parentheses
+}
+
+-----------------------------------------------------
+# -> Make triples optional with the OPTIONAL clause
+
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX sn: <http://www.snee.com/hr/>
+
+SELECT ?givenName ?familyName ?orientDate
+WHERE {
+	?person vcard:family-name ?familyName .
+	?person vcard:given-name ?givenName .
+	OPTIONAL {											# <- OPTIONAL clause to add more information if the triple is available
+		?person sn:completedOrientation ?orientDate .	# <- If matches, returns it, else it will be an empty value
+	}
+}
+
+-----------------------------------------------------
+# -> OPTIONAL + FILTER
+
+PREFIX info:        <http://somewhere/peopleInfo#>
+PREFIX vcard:      <http://www.w3.org/2001/vcard-rdf/3.0#>
+
+SELECT ?name ?age
+WHERE {
+    ?person vcard:FN ?name .
+    OPTIONAL {
+		?person info:age ?age .							# <- returns the age only if it is available and less than 24
+		FILTER (?age < 24)								# <- FILTER inside the OPTIONAL clause : so the filter is also optional !
+	}
+}
+
+-----------------------------------------------------
+# -> Searching for empty values
+
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX sn: <http://www.snee.com/hr/>
+
+SELECT ?givenName ?familyName
+WHERE {
+	?person vcard:family-name ?familyName .
+	?person vcard:given-name ?givenName .
+	NOT EXISTS {										# <- NOT EXISTS clause : triple must not match
+		?person sn:completedOrientation ?orientDate .
+	}
+}
+
+-----------------------------------------------------
+# -> Create and return a new variable with BIND
+
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+
+SELECT ?gName ?fName ?fullName							# <- The 'fullName' variable isn't matching any triple, it will be created
+WHERE {
+	?person vcard:family-name ?fName .
+	?person vcard:given-name ?gName .
+	BIND(CONCAT(?gName, " ", ?fName) AS ?fullName)		# <- Binds the result of concat() function to the 'fullName' variable
+}
+
+-----------------------------------------------------
+# -> Create new triples with the CONSTRUCT clause
+
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+
+CONSTRUCT {												# <- Generates new triples based on the result
+	?person vcard:fn ?fullName .
+}
+WHERE {
+	?person vcard:family-name ?fName .
+	?person vcard:given-name ?gName .
+	BIND(CONCAT(?gName, " ", ?fName) AS ?fullName)
+}
+
+-----------------------------------------------------
+# -> Use regex to filter strings
+
+PREFIX vcard: <http://www.w3.org/2001/vcard-rdf/3.0#>
+
+SELECT ?name
+WHERE {
+	?s vcard:Given ?name .
+	FILTER regex(?name, "r", "i")						# <- Returns names with the letter 'r' in it (case insensitive)
+}
+-----------------------------------------------------
+# -> UNION to regroup results
+
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vCard: <http://www.w3.org/2001/vcard-rdf/3.0#>
+
+SELECT ?name
+WHERE {
+   { [] foaf:name ?name } UNION { [] vCard:FN ?name }	# <- UNION will regroup all results of each triple pattern
+}
+
+faster than this FILTER clause, but identical :
+
+SELECT ?name
+WHERE
+{
+  [] ?p ?name											# <- [] is a blank node
+  FILTER ( ?p = foaf:name || ?p = vCard:FN )			# <- || is the OR operator
+}
+-----------------------------------------------------
+# ->
+-----------------------------------------------------
+# ->
+-----------------------------------------------------
+# ->
+-----------------------------------------------------
+# ->
+-----------------------------------------------------
+# ->
