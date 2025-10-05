@@ -8,11 +8,13 @@ Execute query using Apache Jena ARQ engine :
 > bin/sparql --data=project/data/triples.rdf --query=project/queries/q1.rq
 > bin/arq --data=project/data/triples.rdf --query=project/queries/q1.rq
 
+Execute online : https://atomgraph.github.io/SPARQL-Playground/
+
 - - - - - - - - - - - - Query - - - - - - - - - - - -
 -----------------------------------------------------
 # -> Select all triples
 
-SELECT ?s ?p ?o											# <- SELECT clause to indicate which variable to return
+SELECT ?s ?p ?o											# <- SELECT clause to indicate which variable to return in what order
 WHERE {													# <- WHERE clause as condition
   ?subject ?predicate ?object .							# <- Triple pattern to match. Ends with '.' (last one is optional)
 }
