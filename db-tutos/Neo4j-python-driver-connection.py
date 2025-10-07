@@ -1,6 +1,6 @@
 from neo4j import GraphDatabase
 
-# Dump RDF graph in Neo4j DB
+# Query graph in Neo4j
 server_url = ""
 server_auth = ("username", "password")
 with GraphDatabase.driver(server_url, auth=server_auth) as server:
