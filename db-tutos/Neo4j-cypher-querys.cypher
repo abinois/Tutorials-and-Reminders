@@ -10,22 +10,6 @@
 
 
 
-// ------------ CONFIG ------------ //
-// Show config
-call n10s.graphconfig.show()
-// Init config
-call n10s.graphconfig.init()
-// Modify config param
-call n10s.graphconfig.init({handleMultival: "ARRAY"})
-
-
-// ------------ Import data ------------ //
-// Import ttl file from string (g.serialize())
-call n10s.rdf.import.inline(rdf_str, "Turtle")
-// Load ttl file from path or http
-call n10s.rdf.import.fetch("<file_path or file_url>", "Turtle", {headerParams: {Accept: "application/turtle"}});
-
-
 // ------------ DETACH ------------ // -> Remnove nodes or relationships
 // Clear all nodes
 MATCH (n) DETACH DELETE n;

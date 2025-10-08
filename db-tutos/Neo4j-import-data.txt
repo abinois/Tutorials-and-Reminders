@@ -1,0 +1,61 @@
+# Connectors : https://neo4j.com/product/connectors/
+# Neosemantics : https://neo4j.com/labs/neosemantics/
+# Command line : https://neo4j.com/docs/operations-manual/current/tutorial/neo4j-admin-import/
+# Load CSV : https://neo4j.com/docs/cypher-manual/current/clauses/load-csv/
+
+
+# ======== Load CSV file with Cypher ========
+# ------------ via HTTPS
+LOAD CSV FROM 'https://data.neo4j.com/bands/artists.csv' AS row
+MERGE (:Artist {name: row[1], year: toInteger(row[2])})
+# ------------ via FTP
+LOAD CSV FROM 'ftp://<username>:<password>@<domain>/bands/artists.csv' AS row
+MERGE (a:Artist {name: row[1], year: toInteger(row[2])})
+RETURN a.name, a.year
+# ------------ from Azure
+LOAD CSV FROM 'azb://azb-account/azb-container/artists.csv' AS row
+MERGE (a:Artist {name: row[1], year: toInteger(row[2])})
+RETURN a.name, a.year
+# ------------ from Google cloud storage
+LOAD CSV FROM 'gs://gs-bucket/artists.csv' AS row
+MERGE (a:Artist {name: row[1], year: toInteger(row[2])})
+RETURN a.name, a.year
+# ------------ from AWS S3
+LOAD CSV FROM 's3://aws-bucket/artists.csv' AS row
+MERGE (a:Artist {name: row[1], year: toInteger(row[2])})
+RETURN a.name, a.year
+# ------------ Load multiple CSV files
+// Create person nodes
+LOAD CSV WITH HEADERS FROM 'https://data.neo4j.com/importing-cypher/persons.csv' AS row
+MERGE (p:Person {name: row.name, tmdbId: row.person_tmdbId});
+
+// Create movie nodes
+LOAD CSV WITH HEADERS FROM 'https://data.neo4j.com/importing-cypher/movies.csv' AS row
+MERGE (m:Movie {movieId: row.movieId, title: row.title});
+
+// Create relationships
+LOAD CSV WITH HEADERS FROM 'https://data.neo4j.com/importing-cypher/acted_in.csv' AS row
+MATCH (p:Person {tmdbId: row.person_tmdbId})
+MATCH (m:Movie {movieId: row.movieId})
+MERGE (p)-[r:ACTED_IN {role: row.role}]->(m);
+
+
+# ======== Load RDF with Neosemantics ======== #
+# ------------ Import a stringified ttl file
+call n10s.rdf.import.inline(rdf_str, "Turtle")
+# ------------ Load ttl file from path or http
+call n10s.rdf.import.fetch("<file_path or file_url>", "Turtle", {headerParams: {Accept: "application/turtle"}});
+# ------------ Show config
+call n10s.graphconfig.show()
+# ------------ Init config
+call n10s.graphconfig.init()
+# ------------ Modify config param
+call n10s.graphconfig.init({handleMultival: "ARRAY"})
+
+
+# ======== Command line ======== #
+# ------------ neo4j-admin
+> bin/neo4j-admin database import full neo4j \
+ --nodes=import/movies.csv \
+ --nodes=import/actors.csv \
+ --relationships=import/roles.csv

@@ -1,4 +1,6 @@
-# Documentation : https://neo4j.com/docs/python-manual/current/
+# ============= Documentation =============
+# Python driver : https://neo4j.com/docs/python-manual/current/
+
 
 from neo4j import GraphDatabase, basic_auth
 
