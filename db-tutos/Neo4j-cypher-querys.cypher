@@ -9,8 +9,11 @@
 // and capitalized SNAKE_CASE for relationship types.
 
 
+// ------------ SCHEMA ------------ //
+CALL db.schema.visualization();
 
-// ------------ DETACH ------------ // -> Remnove nodes or relationships
+
+// ------------ DETACH ------------ // -> Remove nodes or relationships
 // Clear all nodes
 MATCH (n) DETACH DELETE n;
 // Clear all nodes attached to 1 specific node of type Human with an attribute human_id with a specific value
@@ -18,7 +21,9 @@ MATCH (:Human {human_id: "xxx"})-[*]-(n) DETACH DELETE n;
 // Clear nodes with specific labels
 MATCH (n:Person|Movie) // Person OR Movie nodes
 DETACH DELETE n;
-
+// ------------ REMOVE ------------ // -> Remove properties
+MATCH (p:Person) REMOVE p.age RETURN p;
+MATCH (p:Person) SET p.age = null RETURN p; // Or setting it to null
 
 // ------------ MATCH ------------ // -> Search pattern in graph
 // Show all nodes with limit
@@ -212,4 +217,17 @@ RETURN cocoActors.name AS recommended, count(*) AS score ORDER BY score DESC;
 // ------------ COLLECT ------------ //
 MATCH (p:Person) WHERE p.name = "Peter"
 SET p.dogNames = COLLECT { MATCH (p)-[:HAS_DOG]->(d:Dog) RETURN d.name } // creates a list with the rows returned by the subquery.
-RETURN p.dogNames as dogNames
+RETURN p.dogNames as dogNames;
+
+
+// ------------ Complex query ------------ //
+// pattern from customer purchasing products to another customer purchasing the same products
+MATCH (c:Customer)-[:PURCHASED]->(:Order)-[:ORDERS]->(p:Product)<-[:ORDERS]-(:Order)<-[:PURCHASED]-(c2:Customer)
+// don't want the same customer pair twice
+WHERE c < c2
+// sort by the top-occuring products
+WITH c, c2, p, count(*) as productOccurrence
+ORDER BY productOccurrence DESC
+// return customer pairs ranked by similarity and the top 5 products
+RETURN c.companyName, c2.companyName, sum(productOccurrence) as similarity, collect(distinct p.productName)[0..5] as topProducts
+ORDER BY similarity DESC LIMIT 10

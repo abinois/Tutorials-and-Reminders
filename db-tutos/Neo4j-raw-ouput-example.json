@@ -1,0 +1,566 @@
+[
+	{
+		"keys": ["path"],
+		"length": 1,
+		"_fields": [
+			{
+			"start": {
+				"identity": {"low": 95, "high": 0},
+				"labels": ["Product"],
+				"properties": {
+					"unitPrice": 30,
+					"unitsInStock": {"low": 15, "high": 0},
+					"reorderLevel": {"low": 10, "high": 0},
+					"productID": "7",
+					"discontinued": false,
+					"productName": "Uncle Bob's Organic Dried Pears",
+					"unitsOnOrder": {"low": 0, "high": 0}
+				},
+				"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:95"
+			},
+			"end": {
+				"identity": {"low": 172, "high": 0},
+				"labels": ["Category"],
+				"properties": {
+					"description": "Dried fruit and bean curd",
+					"categoryName": "Produce",
+					"categoryID": "7"
+				},
+				"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+			},
+			"segments": [{
+				"start": {
+					"identity": {"low": 95, "high": 0},
+					"labels": ["Product"],
+					"properties": {
+						"unitPrice": 30,
+						"unitsInStock": {"low": 15, "high": 0},
+						"reorderLevel": {"low": 10, "high": 0},
+						"productID": "7",
+						"discontinued": false,
+						"productName": "Uncle Bob's Organic Dried Pears",
+						"unitsOnOrder": {"low": 0, "high": 0}
+					},
+					"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:95"
+				},
+				"relationship": {
+					"identity": {"low": 95, "high": 268435968},
+					"start": {"low": 95, "high": 0},
+					"end": {"low": 172, "high": 0},
+					"type": "PART_OF",
+					"properties": {},
+					"elementId": "5:f1cf0e96-2b61-4a36-ac52-78373980ce4d:1152923703630102623",
+					"startNodeElementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:95",
+					"endNodeElementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+				},
+				"end": {
+					"identity": {"low": 172, "high": 0},
+					"labels": ["Category"],
+					"properties": {
+						"description": "Dried fruit and bean curd",
+						"categoryName": "Produce",
+						"categoryID": "7"
+					},
+					"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+				}
+			}],
+			"length": 1
+		}
+		],
+		"_fieldLookup": {
+			"path": 0
+		}
+	},
+	{
+		"keys": [
+		"path"
+		],
+		"length": 1,
+		"_fields": [
+		{
+			"start": {
+			"identity": {
+				"low": 102,
+				"high": 0
+			},
+			"labels": [
+				"Product"
+			],
+			"properties": {
+				"unitPrice": 23.25,
+				"unitsInStock": {
+				"low": 35,
+				"high": 0
+				},
+				"reorderLevel": {
+				"low": 0,
+				"high": 0
+				},
+				"productID": "14",
+				"discontinued": false,
+				"productName": "Tofu",
+				"unitsOnOrder": {
+				"low": 0,
+				"high": 0
+				}
+			},
+			"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:102"
+			},
+			"end": {
+			"identity": {
+				"low": 172,
+				"high": 0
+			},
+			"labels": [
+				"Category"
+			],
+			"properties": {
+				"description": "Dried fruit and bean curd",
+				"categoryName": "Produce",
+				"categoryID": "7"
+			},
+			"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+			},
+			"segments": [
+			{
+				"start": {
+				"identity": {
+					"low": 102,
+					"high": 0
+				},
+				"labels": [
+					"Product"
+				],
+				"properties": {
+					"unitPrice": 23.25,
+					"unitsInStock": {
+					"low": 35,
+					"high": 0
+					},
+					"reorderLevel": {
+					"low": 0,
+					"high": 0
+					},
+					"productID": "14",
+					"discontinued": false,
+					"productName": "Tofu",
+					"unitsOnOrder": {
+					"low": 0,
+					"high": 0
+					}
+				},
+				"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:102"
+				},
+				"relationship": {
+				"identity": {
+					"low": 102,
+					"high": 268435968
+				},
+				"start": {
+					"low": 102,
+					"high": 0
+				},
+				"end": {
+					"low": 172,
+					"high": 0
+				},
+				"type": "PART_OF",
+				"properties": {},
+				"elementId": "5:f1cf0e96-2b61-4a36-ac52-78373980ce4d:1152923703630102630",
+				"startNodeElementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:102",
+				"endNodeElementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+				},
+				"end": {
+				"identity": {
+					"low": 172,
+					"high": 0
+				},
+				"labels": [
+					"Category"
+				],
+				"properties": {
+					"description": "Dried fruit and bean curd",
+					"categoryName": "Produce",
+					"categoryID": "7"
+				},
+				"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+				}
+			}
+			],
+			"length": 1
+		}
+		],
+		"_fieldLookup": {
+		"path": 0
+		}
+	},
+	{
+		"keys": [
+		"path"
+		],
+		"length": 1,
+		"_fields": [
+		{
+			"start": {
+			"identity": {
+				"low": 116,
+				"high": 0
+			},
+			"labels": [
+				"Product"
+			],
+			"properties": {
+				"unitPrice": 45.6,
+				"unitsInStock": {
+				"low": 26,
+				"high": 0
+				},
+				"reorderLevel": {
+				"low": 0,
+				"high": 0
+				},
+				"productID": "28",
+				"discontinued": true,
+				"productName": "Rössle Sauerkraut",
+				"unitsOnOrder": {
+				"low": 0,
+				"high": 0
+				}
+			},
+			"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:116"
+			},
+			"end": {
+			"identity": {
+				"low": 172,
+				"high": 0
+			},
+			"labels": [
+				"Category"
+			],
+			"properties": {
+				"description": "Dried fruit and bean curd",
+				"categoryName": "Produce",
+				"categoryID": "7"
+			},
+			"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+			},
+			"segments": [
+			{
+				"start": {
+				"identity": {
+					"low": 116,
+					"high": 0
+				},
+				"labels": [
+					"Product"
+				],
+				"properties": {
+					"unitPrice": 45.6,
+					"unitsInStock": {
+					"low": 26,
+					"high": 0
+					},
+					"reorderLevel": {
+					"low": 0,
+					"high": 0
+					},
+					"productID": "28",
+					"discontinued": true,
+					"productName": "Rössle Sauerkraut",
+					"unitsOnOrder": {
+					"low": 0,
+					"high": 0
+					}
+				},
+				"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:116"
+				},
+				"relationship": {
+				"identity": {
+					"low": 116,
+					"high": 268435968
+				},
+				"start": {
+					"low": 116,
+					"high": 0
+				},
+				"end": {
+					"low": 172,
+					"high": 0
+				},
+				"type": "PART_OF",
+				"properties": {},
+				"elementId": "5:f1cf0e96-2b61-4a36-ac52-78373980ce4d:1152923703630102644",
+				"startNodeElementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:116",
+				"endNodeElementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+				},
+				"end": {
+				"identity": {
+					"low": 172,
+					"high": 0
+				},
+				"labels": [
+					"Category"
+				],
+				"properties": {
+					"description": "Dried fruit and bean curd",
+					"categoryName": "Produce",
+					"categoryID": "7"
+				},
+				"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+				}
+			}
+			],
+			"length": 1
+		}
+		],
+		"_fieldLookup": {
+		"path": 0
+		}
+	},
+	{
+		"keys": [
+		"path"
+		],
+		"length": 1,
+		"_fields": [
+		{
+			"start": {
+			"identity": {
+				"low": 139,
+				"high": 0
+			},
+			"labels": [
+				"Product"
+			],
+			"properties": {
+				"unitPrice": 53,
+				"unitsInStock": {
+				"low": 20,
+				"high": 0
+				},
+				"reorderLevel": {
+				"low": 10,
+				"high": 0
+				},
+				"productID": "51",
+				"discontinued": false,
+				"productName": "Manjimup Dried Apples",
+				"unitsOnOrder": {
+				"low": 0,
+				"high": 0
+				}
+			},
+			"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:139"
+			},
+			"end": {
+			"identity": {
+				"low": 172,
+				"high": 0
+			},
+			"labels": [
+				"Category"
+			],
+			"properties": {
+				"description": "Dried fruit and bean curd",
+				"categoryName": "Produce",
+				"categoryID": "7"
+			},
+			"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+			},
+			"segments": [
+			{
+				"start": {
+				"identity": {
+					"low": 139,
+					"high": 0
+				},
+				"labels": [
+					"Product"
+				],
+				"properties": {
+					"unitPrice": 53,
+					"unitsInStock": {
+					"low": 20,
+					"high": 0
+					},
+					"reorderLevel": {
+					"low": 10,
+					"high": 0
+					},
+					"productID": "51",
+					"discontinued": false,
+					"productName": "Manjimup Dried Apples",
+					"unitsOnOrder": {
+					"low": 0,
+					"high": 0
+					}
+				},
+				"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:139"
+				},
+				"relationship": {
+				"identity": {
+					"low": 139,
+					"high": 268435968
+				},
+				"start": {
+					"low": 139,
+					"high": 0
+				},
+				"end": {
+					"low": 172,
+					"high": 0
+				},
+				"type": "PART_OF",
+				"properties": {},
+				"elementId": "5:f1cf0e96-2b61-4a36-ac52-78373980ce4d:1152923703630102667",
+				"startNodeElementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:139",
+				"endNodeElementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+				},
+				"end": {
+				"identity": {
+					"low": 172,
+					"high": 0
+				},
+				"labels": [
+					"Category"
+				],
+				"properties": {
+					"description": "Dried fruit and bean curd",
+					"categoryName": "Produce",
+					"categoryID": "7"
+				},
+				"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+				}
+			}
+			],
+			"length": 1
+		}
+		],
+		"_fieldLookup": {
+		"path": 0
+		}
+	},
+	{
+		"keys": [
+		"path"
+		],
+		"length": 1,
+		"_fields": [
+		{
+			"start": {
+			"identity": {
+				"low": 162,
+				"high": 0
+			},
+			"labels": [
+				"Product"
+			],
+			"properties": {
+				"unitPrice": 10,
+				"unitsInStock": {
+				"low": 4,
+				"high": 0
+				},
+				"reorderLevel": {
+				"low": 5,
+				"high": 0
+				},
+				"productID": "74",
+				"discontinued": false,
+				"productName": "Longlife Tofu",
+				"unitsOnOrder": {
+				"low": 20,
+				"high": 0
+				}
+			},
+			"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:162"
+			},
+			"end": {
+			"identity": {
+				"low": 172,
+				"high": 0
+			},
+			"labels": [
+				"Category"
+			],
+			"properties": {
+				"description": "Dried fruit and bean curd",
+				"categoryName": "Produce",
+				"categoryID": "7"
+			},
+			"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+			},
+			"segments": [
+			{
+				"start": {
+				"identity": {
+					"low": 162,
+					"high": 0
+				},
+				"labels": [
+					"Product"
+				],
+				"properties": {
+					"unitPrice": 10,
+					"unitsInStock": {
+					"low": 4,
+					"high": 0
+					},
+					"reorderLevel": {
+					"low": 5,
+					"high": 0
+					},
+					"productID": "74",
+					"discontinued": false,
+					"productName": "Longlife Tofu",
+					"unitsOnOrder": {
+					"low": 20,
+					"high": 0
+					}
+				},
+				"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:162"
+				},
+				"relationship": {
+				"identity": {
+					"low": 162,
+					"high": 268435968
+				},
+				"start": {
+					"low": 162,
+					"high": 0
+				},
+				"end": {
+					"low": 172,
+					"high": 0
+				},
+				"type": "PART_OF",
+				"properties": {},
+				"elementId": "5:f1cf0e96-2b61-4a36-ac52-78373980ce4d:1152923703630102690",
+				"startNodeElementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:162",
+				"endNodeElementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+				},
+				"end": {
+				"identity": {
+					"low": 172,
+					"high": 0
+				},
+				"labels": [
+					"Category"
+				],
+				"properties": {
+					"description": "Dried fruit and bean curd",
+					"categoryName": "Produce",
+					"categoryID": "7"
+				},
+				"elementId": "4:f1cf0e96-2b61-4a36-ac52-78373980ce4d:172"
+				}
+			}
+			],
+			"length": 1
+		}
+		],
+		"_fieldLookup": {
+		"path": 0
+		}
+	}
+]
