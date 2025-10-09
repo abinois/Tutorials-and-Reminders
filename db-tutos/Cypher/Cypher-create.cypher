@@ -17,7 +17,7 @@ ON CREATE SET h42.createAt = datetime() // If node doesn't exist, MERGE will cre
 ON MATCH SET h42.updateAt = datetime() // If node already exists, MERGE won't create it and this will happen
 RETURN h42;
 
-// ------------ SET ------------ // -> Set properties
+// ------------ SET ------------ // -> Set properties, node labels
 // Add new properties
 MATCH (h:Human) WHERE h.name = "John"
 SET h.age = 42, h.last_name = "Doe"
@@ -30,3 +30,7 @@ RETURN h;
 MERGE (h42:Human {human_id: "zzz"})
 ON CREATE SET h42.name = "Sam"
 RETURN h42;
+// Add new label
+MATCH (h:Human)
+WHERE EXISTS { (h)-[:EAT]->(:Animal) }
+SET h:Carnivore

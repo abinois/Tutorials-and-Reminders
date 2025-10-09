@@ -5,12 +5,25 @@
 // Download	: https://neo4j.com/download/
 // Courses	: https://graphacademy.neo4j.com/
 
-// Conventionally, CamelCase is used for node labels
-// and capitalized SNAKE_CASE for relationship types.
+// ====== Syntax Convention ======
+// Syntax	: https://neo4j.com/docs/cypher-manual/current/syntax/
+// Keywords : https://neo4j.com/docs/cypher-manual/current/syntax/keywords/
+//  - PascalCase is used for node labels
+//  - capitalized SNAKE_CASE for relationship types
+//  - camelCase for property names
+//  - snake_case for constraints
+//  - No special characters allowed except underscore, otherwise use backticks
+//  - Keywords in uppercase and variables in camelCase
+//  - Unicode characters can be escapded like so : \uxxx
 
 
 // ------------ SCHEMA ------------ //
 CALL db.schema.visualization();
+
+// ------------ PROFILE / EXPLAIN ------------ //
+// Show query execution plan
+PROFILE MATCH (h:Human {human_id: "xxx"})-[*]-(n) RETURN h, n;
+
 
 // ------------ MATCH ------------ // -> Search pattern in graph
 // Show all nodes with limit
@@ -50,10 +63,10 @@ WHERE m.released IS NOT NULL // Filter empty property values
 RETURN m.title AS title, m.url AS url, m.released AS released // Rename with AS
 ORDER BY released DESC LIMIT 5; // Sort with ORDER BY
 
-// ------------ WITH ------------ // -> pass along variables
-// Find people with 2-6 years of experience
+// ------------ WITH ------------ // -> pass along variables to the next query
+// Use WITH to assign variables
 WITH 2 AS expMin, 6 AS expMax
-MATCH (p:Person) WHERE expMin <= p.yearsExp <= expMax RETURN p;
+MATCH (p:Person) WHERE expMin <= p.yearsExp <= expMax RETURN p; // Find people with 2-6 years of experience
 
 // ------------ Path ------------ //
 // Return the path itself
@@ -63,6 +76,9 @@ MATCH (:Person {name:"Kevin Bacon"})-[*1..6]-(n) // Show all nodes up to six hop
 RETURN DISTINCT n;
 // Find shortest path
 MATCH p=shortestPath((:Person {name:"Kevin Bacon"})-[*]-(:Person {name:"Meg Ryan"}))
+RETURN p;
+// Find all shortest paths
+MATCH p = allShortestPaths((u1:User {name:"A. L"})-[*]-(u2:User {name:"cybersam"}))
 RETURN p;
 
 // ------------ Complex query ------------ //

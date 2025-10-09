@@ -11,6 +11,10 @@ WHERE h.name ENDS WITH "Jr."
 AND h.name STARTS WITH "Mr."
 AND h.name CONTAINS "John"
 RETURN h;
+// Unicodes can be escaped as \uxxx
+MATCH (r:Recipe)
+WHERE r.description CONTAINS "\u00B0"
+RETURN r;
 // Comparison with numerical value : <, >, <=, >=
 MATCH (h) WHERE h.age > 18 RETURN h;
 MATCH (h) WHERE 20 <= h.age < 30 RETURN h; // Double comparison

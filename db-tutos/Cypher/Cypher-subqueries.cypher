@@ -1,5 +1,6 @@
 // ------------ SUBQUERIES ------------ //
-// ------------ CALL ------------ //
+
+// ------------ CALL ------------ // -> Variables imported into a CALL subquery are visible in the whole subquery
 // Return all node labels use in the graph
 CALL db.labels() YIELD label;
 // ------------ COUNT ------------ //
@@ -13,7 +14,7 @@ WHERE EXISTS {
 	WHERE p.name = d.name
 }
 RETURN p.name AS name;
-// Another exist pattern
+// NOT EXISTS
 MATCH (p:Person {name:"Tom Hanks"})-[:ACTED_IN]->(m)<-[:ACTED_IN]-(coActors),
 	(coActors)-[:ACTED_IN]->(m2)<-[:ACTED_IN]-(cocoActors)
 WHERE NOT EXISTS { (p)-[:ACTED_IN]->()<-[:ACTED_IN]-(cocoActors) } AND p <> cocoActors
