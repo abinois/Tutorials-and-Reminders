@@ -1,6 +1,7 @@
 // ====== Documentations ======
 // Cypher	: https://neo4j.com/docs/cypher-cheat-sheet/5/all/
 // Neo4j	: https://neo4j.com/docs/
+// Procedure: https://neo4j.com/docs/operations-manual/current/procedures/
 // Install	: https://neo4j.com/docs/operations-manual/current/installation/
 // Download	: https://neo4j.com/download/
 // Courses	: https://graphacademy.neo4j.com/
@@ -17,8 +18,6 @@
 //  - Unicode characters can be escapded like so : \uxxx
 
 
-// ------------ SCHEMA ------------ //
-CALL db.schema.visualization();
 
 // ------------ PROFILE / EXPLAIN ------------ //
 // Show query execution plan
@@ -62,6 +61,25 @@ MATCH (m:Movie)
 WHERE m.released IS NOT NULL // Filter empty property values
 RETURN m.title AS title, m.url AS url, m.released AS released // Rename with AS
 ORDER BY released DESC LIMIT 5; // Sort with ORDER BY
+// Filter out null values
+WITH [1, true, "three", 4.0, null, ['a']] AS x
+RETURN [item IN x WHERE NOT item IS NULL] AS res;
+
+// ------------ Value types ------------ //
+// Types : BOOLEAN, DATE, DURATION, FLOAT, INTEGER, LIST, LOCAL DATETIME, LOCAL TIME, POINT, STRING, ZONED DATETIME, and ZONED TIME
+WITH [1, true, "three", 4.0, null, ['a']] AS x
+RETURN [item IN x | valueType(item) ] AS res; // -> ["INTEGER NOT NULL", "BOOLEAN NOT NULL", "STRING NOT NULL", "FLOAT NOT NULL", "NULL", "LIST<STRING NOT NULL> NOT NULL"]
+WITH [1, true, "three", 4.0, null, ['a']] AS x
+RETURN [item IN x | apoc.meta.cypher.type(item) ] AS res; // -> ["INTEGER", "BOOLEAN", "STRING", "FLOAT", "NULL", "LIST OF STRING"]
+// Type check (all types include null)
+WITH [1, true, "three", 4.0, null, ['a']] AS x
+RETURN [item IN x WHERE item IS :: INTEGER] AS res; // -> [1, null]
+// Type check (all types include null)
+WITH [1, true, "three", 4.0, null, ['a']] AS x
+RETURN [item IN x WHERE item IS :: INTEGER NOT NULL ] AS res; // -> [1]
+// Filter out null values using NULL type
+WITH [1, true, "three", 4.0, null, ['a']] AS x
+RETURN [item IN x WHERE NOT item IS :: NULL | item] AS res; // -> [1, true, "three", 4.0, ["a"]]
 
 // ------------ WITH ------------ // -> pass along variables to the next query
 // Use WITH to assign variables
