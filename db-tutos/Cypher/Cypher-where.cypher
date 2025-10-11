@@ -30,3 +30,13 @@ RETURN h;
 MATCH (h1:Human)--(h2:Human)
 WHERE NOT (h1)-[:HAS_FRIEND]->(h2)
 RETURN h1, h2;
+
+// ------------ NULL / AS / ORDER BY ------------ //
+// Show the 5 most recent Movie nodes
+MATCH (m:Movie)
+WHERE m.released IS NOT NULL // Filter empty property values
+RETURN m.title AS title, m.url AS url, m.released AS released // Rename with AS
+ORDER BY released DESC LIMIT 5; // Sort with ORDER BY
+// Filter out null values
+WITH [1, true, "three", 4.0, null, ['a']] AS x
+RETURN [item IN x WHERE NOT item IS NULL] AS res

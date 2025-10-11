@@ -33,6 +33,12 @@ MATCH () RETURN count(*);
 MATCH (h:Human {human_id: "xxx"})-[*]-(n) RETURN h, n;
 // Node with multiple labels
 MATCH (n:Human:Superhero)-->(a:Animal) RETURN n, a;
+// Movie OR Person nodes
+MATCH (n:Movie|Person)
+RETURN n.name AS name, n.title AS title;
+// Node with not this label
+MATCH (n:!Movie)
+RETURN labels(n) AS label, count(n) AS labelCount;
 // Multiple lines query
 MATCH (h:Human)-[:HAS_PET]->(:Animal {color: "Brown"})
 MATCH (s:Store)<-[r1]-(h)-[r2]->(c:Location {category: "cinema"})
@@ -55,36 +61,10 @@ MATCH (:Human)-[:EAT]->(a:Animal)<-[:EAT]-(:Human) RETURN a;
 // Relationship with a specific property value
 MATCH (h:Human)-[:HAS_FRIEND {best: TRUE}]->() RETURN h;
 
-// ------------ NULL / AS / ORDER BY ------------ //
-// Show the 5 most recent Movie nodes
-MATCH (m:Movie)
-WHERE m.released IS NOT NULL // Filter empty property values
-RETURN m.title AS title, m.url AS url, m.released AS released // Rename with AS
-ORDER BY released DESC LIMIT 5; // Sort with ORDER BY
-// Filter out null values
-WITH [1, true, "three", 4.0, null, ['a']] AS x
-RETURN [item IN x WHERE NOT item IS NULL] AS res;
-
-// ------------ Value types ------------ //
-// Types : BOOLEAN, DATE, DURATION, FLOAT, INTEGER, LIST, LOCAL DATETIME, LOCAL TIME, POINT, STRING, ZONED DATETIME, and ZONED TIME
-WITH [1, true, "three", 4.0, null, ['a']] AS x
-RETURN [item IN x | valueType(item) ] AS res; // -> ["INTEGER NOT NULL", "BOOLEAN NOT NULL", "STRING NOT NULL", "FLOAT NOT NULL", "NULL", "LIST<STRING NOT NULL> NOT NULL"]
-WITH [1, true, "three", 4.0, null, ['a']] AS x
-RETURN [item IN x | apoc.meta.cypher.type(item) ] AS res; // -> ["INTEGER", "BOOLEAN", "STRING", "FLOAT", "NULL", "LIST OF STRING"]
-// Type check (all types include null)
-WITH [1, true, "three", 4.0, null, ['a']] AS x
-RETURN [item IN x WHERE item IS :: INTEGER] AS res; // -> [1, null]
-// Type check (all types include null)
-WITH [1, true, "three", 4.0, null, ['a']] AS x
-RETURN [item IN x WHERE item IS :: INTEGER NOT NULL ] AS res; // -> [1]
-// Filter out null values using NULL type
-WITH [1, true, "three", 4.0, null, ['a']] AS x
-RETURN [item IN x WHERE NOT item IS :: NULL | item] AS res; // -> [1, true, "three", 4.0, ["a"]]
-
-// ------------ WITH ------------ // -> pass along variables to the next query
-// Use WITH to assign variables
-WITH 2 AS expMin, 6 AS expMax
-MATCH (p:Person) WHERE expMin <= p.yearsExp <= expMax RETURN p; // Find people with 2-6 years of experience
+// ------------ OPTIONAL MATCH ------------ //
+MATCH (p:Person {name: 'Martin Sheen'})
+OPTIONAL MATCH (p)-[r:DIRECTED]->()
+RETURN p.name, r; // 'r' will be null for nodes who don't match the pattern
 
 // ------------ Path ------------ //
 // Return the path itself

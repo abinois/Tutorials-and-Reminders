@@ -28,3 +28,5 @@ RETURN p;
 // ------------ DATABASE ------------ //
 CALL db.schema.visualization(); // Show Graph model
 CALL db.info() // Return database informations
+CALL db.relationshipTypes() // Return a list all relationship types
+CALL db.labels() // Return a list of all node labels

@@ -3,6 +3,10 @@
 CREATE CONSTRAINT person_name IF NOT EXISTS FOR (p:Person)
 REQUIRE p.name IS UNIQUE;
 
+// ------------ INDEX ------------ // -> Create an index for a property to speed up queries
+// Add an index on Person.name
+CREATE INDEX person_name FOR (p:Person) ON (p.name);
+
 // ------------ CREATE ------------ // -> Create nodes and relationships
 // Create a new node. Will create a duplicate if that exact node already exists
 CREATE (h42:Human {human_id: "zzz"}); // human_id property will be the unique primary key for the node

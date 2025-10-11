@@ -41,4 +41,18 @@ MATCH (alice:Person {name: 'Alice'})
 RETURN [(p:Person)-[:WORKS_FOR]->(alice) WHERE p.age > 30 | p.name || ', ' || toString(p.age)] AS employeesAbove30; // -> ["Cecilia, 31"]
 // List functions
 WITH [-1, 1, 2, 3, 4] AS l
-RETURN head(l), tail(l), last(l), size(l)
+RETURN head(l), tail(l), last(l), size(l);
+
+
+// ------------ FOREACH ------------ //
+// Mark relationships along the path
+MATCH p=(start)-[*]->(finish)
+WHERE start.name = 'A' AND finish.name = 'D'
+FOREACH ( r IN relationships(p) | SET r.marked = true );
+// Mark nodes along the path
+MATCH p=(start)-[*]->(finish)
+WHERE start.name = 'A' AND finish.name = 'D'
+FOREACH (n IN nodes(p) | SET n.marked = true);
+// Looping on list elements with FOREACH to create nodes
+WITH ['E', 'F', 'G'] AS names
+FOREACH ( value IN names | CREATE (:Person {name: value}) )
