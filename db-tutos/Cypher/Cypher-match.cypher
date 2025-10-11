@@ -1,24 +1,3 @@
-// ====== Documentations ======
-// Cypher	: https://neo4j.com/docs/cypher-cheat-sheet/5/all/
-// Neo4j	: https://neo4j.com/docs/
-// Procedure: https://neo4j.com/docs/operations-manual/current/procedures/
-// Install	: https://neo4j.com/docs/operations-manual/current/installation/
-// Download	: https://neo4j.com/download/
-// Courses	: https://graphacademy.neo4j.com/
-
-// ====== Syntax Convention ======
-// Syntax	: https://neo4j.com/docs/cypher-manual/current/syntax/
-// Keywords : https://neo4j.com/docs/cypher-manual/current/syntax/keywords/
-//  - PascalCase is used for node labels
-//  - capitalized SNAKE_CASE for relationship types
-//  - camelCase for property names
-//  - snake_case for constraints
-//  - No special characters allowed except underscore, otherwise use backticks
-//  - Keywords in uppercase and variables in camelCase
-//  - Unicode characters can be escapded like so : \uxxx
-
-
-
 // ------------ PROFILE / EXPLAIN ------------ //
 // Show query execution plan
 PROFILE MATCH (h:Human {human_id: "xxx"})-[*]-(n) RETURN h, n;
@@ -39,6 +18,8 @@ RETURN n.name AS name, n.title AS title;
 // Node with not this label
 MATCH (n:!Movie)
 RETURN labels(n) AS label, count(n) AS labelCount;
+// EAT OR HAS_PET relationship
+MATCH (h:Human)-[:HAS_PET|EAT]->(:Animal) FINISH;
 // Multiple lines query
 MATCH (h:Human)-[:HAS_PET]->(:Animal {color: "Brown"})
 MATCH (s:Store)<-[r1]-(h)-[r2]->(c:Location {category: "cinema"})
@@ -65,13 +46,6 @@ MATCH (h:Human)-[:HAS_FRIEND {best: TRUE}]->() RETURN h;
 MATCH (p:Person {name: 'Martin Sheen'})
 OPTIONAL MATCH (p)-[r:DIRECTED]->()
 RETURN p.name, r; // 'r' will be null for nodes who don't match the pattern
-
-// ------------ Path ------------ //
-// Return the path itself
-MATCH p = ()-[:ACTED_IN]->(:Movie) RETURN p;
-// Restrict number of hops
-MATCH (:Person {name:"Kevin Bacon"})-[*1..6]-(n) // Show all nodes up to six hops away from a node
-RETURN DISTINCT n;
 
 // ------------ Complex query ------------ //
 // pattern from customer purchasing products to another customer purchasing the same products

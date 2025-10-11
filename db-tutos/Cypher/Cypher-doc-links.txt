@@ -1,0 +1,19 @@
+// ====== Documentations ======
+// Cypher	: https://neo4j.com/docs/cypher-cheat-sheet/5/all/
+// Neo4j	: https://neo4j.com/docs/
+// Procedure: https://neo4j.com/docs/operations-manual/current/procedures/
+// Install	: https://neo4j.com/docs/operations-manual/current/installation/
+// Download	: https://neo4j.com/download/
+// Courses	: https://graphacademy.neo4j.com/
+
+// ====== Syntax Convention ======
+// Syntax	: https://neo4j.com/docs/cypher-manual/current/syntax/
+// Keywords : https://neo4j.com/docs/cypher-manual/current/syntax/keywords/
+//  - PascalCase is used for node labels
+//  - capitalized SNAKE_CASE for relationship types
+//  - camelCase for property names
+//  - snake_case for constraints
+//  - No special characters allowed except underscore, otherwise use backticks
+//  - Keywords in uppercase and variables in camelCase
+//  - Unicode characters can be escapded like so : \uxxx
+

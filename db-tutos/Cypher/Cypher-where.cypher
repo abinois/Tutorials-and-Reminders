@@ -3,6 +3,10 @@
 MATCH (h) WHERE h:Human RETURN h;
 // Node with a specific property value
 MATCH (h) WHERE h.name = "John" RETURN h;
+// WHERE inside pattern mathcing
+MATCH (a:Person WHERE a.name = 'Andy')-[:KNOWS]->(b:Person WHERE b.age > 35) RETURN b.name AS name;
+// WHERE inside relationship pattern matching
+MATCH ()-[r WHERE 10 < r.distance < 100]->() RETURN r;
 // With regex
 MATCH (h) WHERE h.name =~ "J.*" RETURN h;
 // String matching : STARTS WITH, ENDS WITH CONTAINS

@@ -36,4 +36,15 @@ RETURN [item IN x WHERE item IS :: INTEGER NOT NULL ] AS res; // -> [1]
 
 // Filter out null values using NULL type and NOT
 WITH [1, true, "three", 4.0, null, ['a']] AS x
-RETURN [item IN x WHERE NOT item IS :: NULL | item] AS res // -> [1, true, "three", 4.0, ["a"]]
+RETURN [item IN x WHERE NOT item IS :: NULL | item] AS res; // -> [1, true, "three", 4.0, ["a"]]
+
+// ------------ POINT ------------ //
+// point data type is not suported by import manager
+// it needs to bet set after
+MATCH (l:Location)
+SET l.position = point({latitude: l.latitude, longitude: l.longitude});
+// Distance between two points
+MATCH (l:Location {address: '1 Coronation Street'})
+WITH l.position AS corrie
+MATCH (x:Location)<-[:OCCURRED_AT]-(c:Crime)
+RETURN x.address as crime_location, point.distance(x.position, corrie) AS distanceFromCoronationSt
