@@ -15,7 +15,12 @@ MATCH (p:Person) WHERE toLower(p.name) = "john" RETURN p;
 MATCH (p:Person)-[:EAT]->(:Animal {specie: "Fish"})
 WHERE NOT exists( (p)-[:EAT]->(:Animal {specie: "Chicken"}) )
 RETURN p;
-
+// Find shortest path
+MATCH p=shortestPath((:Person {name:"Kevin Bacon"})-[*]-(:Person {name:"Meg Ryan"}))
+RETURN p;
+// Find all shortest paths
+MATCH p = allShortestPaths((u1:User {name:"A. L"})-[*]-(u2:User {name:"cybersam"}))
+RETURN p;
 
 // ============ Procedures ============ //
 // Procedure: https://neo4j.com/docs/operations-manual/current/procedures/

@@ -1,4 +1,6 @@
 // ------------ list ------------ //
+// Doc : https://neo4j.com/docs/cypher-manual/current/expressions/list-expressions/
+
 // range()
 RETURN range(0, 10)[3] AS element; // -> 3
 // List slicing
@@ -31,6 +33,12 @@ RETURN [i IN range(0, size(list)-1) | toString(i) || ': ' || toString(list[i])] 
 // With collect()
 MATCH (person:Person)
 RETURN [p IN collect(person) WHERE 'Python' IN p.skills | p.name] AS pythonExperts;
+// Get all distinct relationship type of a node
+MATCH p=(n:User {user_id:605})--()
+RETURN collect(distinct [r IN relationships(p) | type(r)]);
 // Pattern comprehension
 MATCH (alice:Person {name: 'Alice'})
-RETURN [(p:Person)-[:WORKS_FOR]->(alice) WHERE p.age > 30 | p.name || ', ' || toString(p.age)] AS employeesAbove30 // -> ["Cecilia, 31"]
+RETURN [(p:Person)-[:WORKS_FOR]->(alice) WHERE p.age > 30 | p.name || ', ' || toString(p.age)] AS employeesAbove30; // -> ["Cecilia, 31"]
+// List functions
+WITH [-1, 1, 2, 3, 4] AS l
+RETURN head(l), tail(l), last(l), size(l)

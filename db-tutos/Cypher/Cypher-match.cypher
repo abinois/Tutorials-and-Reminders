@@ -92,12 +92,6 @@ MATCH p = ()-[:ACTED_IN]->(:Movie) RETURN p;
 // Restrict number of hops
 MATCH (:Person {name:"Kevin Bacon"})-[*1..6]-(n) // Show all nodes up to six hops away from a node
 RETURN DISTINCT n;
-// Find shortest path
-MATCH p=shortestPath((:Person {name:"Kevin Bacon"})-[*]-(:Person {name:"Meg Ryan"}))
-RETURN p;
-// Find all shortest paths
-MATCH p = allShortestPaths((u1:User {name:"A. L"})-[*]-(u2:User {name:"cybersam"}))
-RETURN p;
 
 // ------------ Complex query ------------ //
 // pattern from customer purchasing products to another customer purchasing the same products
