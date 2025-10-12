@@ -1,0 +1,89 @@
+// ============== Parameters ============== //
+
+
+// - As literal value ---------------------
+{
+	"targetJob": "Developer",
+	"maxAge": 40
+}
+MATCH (n:Person {job: $targetJob})
+WHERE n.age > $maxAge
+RETURN n.name, n.age
+
+// - As property key ----------------------
+{
+	"propname": "age"
+}
+MATCH (n:Person)
+WHERE n[$propname] > 40
+RETURN n.name
+
+// - As limit or skip ---------------------
+{
+	"offset": 5,
+	"maxResult": 10
+}
+MATCH (n:Person)
+RETURN n
+ORDER BY n.name
+SKIP $offset
+LIMIT $maxResult
+
+// - As function or procedure argument ----
+{
+	"indexname": "vectorIndex339"
+}
+CALL db.resampleIndex($indexname)
+
+// - Overwrite properties with a map ------
+{
+	"props": {
+    	"name": "Andy",
+		"position": "Developer"
+	}
+}
+MATCH (n:Person)
+WHERE n.name = 'Michael'
+SET n = $props
+
+// - Create a node with a map -------------
+{
+	"props": {
+    	"name": "Andy",
+		"position": "Developer"
+	}
+}
+CREATE ($props)
+
+// - Create multiple nodes ----------------
+{
+  "props": [
+	{
+		"awesome": true,
+		"name": "Andy",
+		"position": "Developer"
+	}, {
+		"children": 3,
+		"name": "Michael",
+		"position": "Developer"
+	}
+	]
+}
+UNWIND $props AS properties
+CREATE (n:Person)
+SET n = properties
+RETURN n
+
+// - As node label ------------------------
+{
+	"label": "Movie"
+}
+MATCH (movie:$($label))
+RETURN movie.title AS movieTitle
+
+// - As relationship type -----------------
+{
+	"type": "ACTED_IN"
+}
+MATCH (:Person)-[:$($type)]->(m:Movie)
+RETURN m.title AS movieTitle

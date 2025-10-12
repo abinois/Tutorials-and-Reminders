@@ -21,7 +21,7 @@ with GraphDatabase.driver(server_url, auth=server_auth) as driver:
 	# Close connection
 driver.close()
 
-# Insert variable into the Cypher query
+# Cypher query with parameters
 query = '''
 MATCH (movie:Movie {title:$favorite})<-[:ACTED_IN]-(actor)-[:ACTED_IN]->(rec:Movie)
 RETURN DISTINCT rec.title AS title LIMIT 20

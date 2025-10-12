@@ -1,0 +1,44 @@
+// Doc : https://neo4j.com/docs/operations-manual/current/cypher-shell/
+
+
+# --- Informations -------------
+:help <command>					# Display command usage
+:history						# Open history sidebar
+:sysinfo						# display system information
+:clear							# remove all frames from the stream
+
+# --- Database -----------------
+:connect						# connect to an instance
+:disconnect						# disconnect from an instance
+:use							# Set the active database
+:acces-mode						# Show the active access mode
+:access-mode write				# Enables write queries such as CREATE
+:access-mode read				# Enables read querioes such as MATCH
+:exit							# Exit shell
+> bin/cypher-shell -a bolt://localhost:7687 -u <username> -p <password>
+
+# --- Parameters ---------------
+:params							# Show parameters
+:param list						# Show parameters (idem)
+:param clear					# Delete all parameters
+:param name => "value"			# Set a parameter
+:param {						# Set multiple parameters with a map
+	alias: 'Robin',
+	born: date('1940-03-20')
+}
+
+# --- Files --------------------
+:source	<filepath>				# Executes Cypher statements from a file
+> cat example.cypher | bin/cypher-shell -u <username> -p <password> --format plain
+
+# --- Transactions -------------
+:begin							# Open a transaction
+:commit							# Commit the currently open transaction
+:rollback						# Rollback the currently open transaction
+
+# --- Graph visual style -------
+:style							# Display graph visualization style
+
+
+
+:impersonate					# Impersonate user

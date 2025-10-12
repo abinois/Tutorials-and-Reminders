@@ -28,19 +28,23 @@ MATCH (h) WHERE h.name <> "John" RETURN h;
 MATCH (h) WHERE h.birthday > date("2025-01-02") RETURN h;
 // OR / AND / XOR / NOT
 MATCH (h)
-WHERE (h.name = "John" OR h.name = "Jane") AND h.age = 42
+WHERE (h.name = "John" OR h.name = "Jane")
+AND h.age = 42
+AND NOT h.lastname CONTAINS "Smith"
 RETURN h;
 // Comparison with graph itself
 MATCH (h1:Human)--(h2:Human)
 WHERE NOT (h1)-[:HAS_FRIEND]->(h2)
 RETURN h1, h2;
 
-// ------------ NULL / AS / ORDER BY ------------ //
-// Show the 5 most recent Movie nodes
+// ------------ NULL / AS / ORDER BY / SKIP / LIMIT ------------ //
 MATCH (m:Movie)
 WHERE m.released IS NOT NULL // Filter empty property values
-RETURN m.title AS title, m.url AS url, m.released AS released // Rename with AS
-ORDER BY released DESC LIMIT 5; // Sort with ORDER BY
+RETURN m.title AS title, m.released AS released // Rename with AS
+ORDER BY released DESC // Sort with ORDER BY
+SKIP 1 // Skip first row with SKIP
+LIMIT 5; // Limit result to 5
+
 // Filter out null values
 WITH [1, true, "three", 4.0, null, ['a']] AS x
 RETURN [item IN x WHERE NOT item IS NULL] AS res

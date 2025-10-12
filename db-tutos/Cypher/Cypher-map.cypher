@@ -37,3 +37,18 @@ RETURN p {.name, totalMovies: size(movies)} AS keanuDetails;
 // Get all node properties with all-map projection
 MATCH (n:User {user_id:605})
 RETURN n{.*} AS properties;
+// Generate list of map using collect()
+MATCH (c:Case {primaryid: 111791005})
+MATCH (c)-[consumed]->(d:Drug)-[:PRESCRIBED]-(therapy)
+MATCH (r)<-[:HAS_REACTION]-(c)-[:RESULTED_IN]->(outcome)
+WITH distinct c.age + ' ' + c.ageUnit as age, c.gender as gender,
+collect(distinct r.description) as sideEffects,
+collect(
+    distinct {
+        drug: d.name,
+        dose: consumed.doseAmount + ' '  + consumed.doseUnit,
+        indication: consumed.indication,
+        route: consumed.route
+    }) as treatment,
+collect(distinct outcome.outcome) as outcomes
+RETURN age, gender, treatment, sideEffects, outcomes

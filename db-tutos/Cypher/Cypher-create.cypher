@@ -30,6 +30,10 @@ RETURN h;
 MATCH (h:Human) WHERE h.name = "John"
 SET h += {age: 42, last_name: "Doe"}
 RETURN h;
+// Overwrite node properties with =
+MATCH (h:Human) WHERE h.name = "John"
+SET h = {name: "Jane", age: 42, last_name: "Doe"}
+RETURN h;
 // Will SET a property if the MERGE creates a new node
 MERGE (h42:Human {human_id: "zzz"})
 ON CREATE SET h42.name = "Sam"
