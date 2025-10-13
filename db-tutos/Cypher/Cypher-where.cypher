@@ -1,6 +1,6 @@
 // ------------ WHERE ------------ // -> Filter results
 // Node with a specific label
-MATCH (h) WHERE h:Human RETURN h;
+MATCH (h:Human) WHERE h:Carnivore RETURN h;
 // Node with a specific property value
 MATCH (h) WHERE h.name = "John" RETURN h;
 // WHERE inside pattern mathcing

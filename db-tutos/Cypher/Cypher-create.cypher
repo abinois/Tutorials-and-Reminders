@@ -2,6 +2,8 @@
 // Force uniqueness of a property value for all Person nodes
 CREATE CONSTRAINT person_name IF NOT EXISTS FOR (p:Person)
 REQUIRE p.name IS UNIQUE;
+// Show all constraints
+SHOW CONSTRAINTS;
 
 // ------------ INDEX ------------ // -> Create an index for a property to speed up queries
 // Add an index on Person.name
@@ -41,4 +43,9 @@ RETURN h42;
 // Add new label
 MATCH (h:Human)
 WHERE EXISTS { (h)-[:EAT]->(:Animal) }
-SET h:Carnivore
+SET h:Carnivore;
+
+// Import CSV
+LOAD CSV WITH HEADERS FROM "file:///students_2021.csv" AS row
+CREATE (s:Student)
+SET s.year = 2021, s.name = row.student_name

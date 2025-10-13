@@ -6,8 +6,12 @@
 :history						# Open history sidebar
 :sysinfo						# display system information
 :clear							# remove all frames from the stream
+:config							# Show config parameters
 
 # --- Database -----------------
+:server connect
+:server disconnect
+:server status
 :connect						# connect to an instance
 :disconnect						# disconnect from an instance
 :use							# Set the active database

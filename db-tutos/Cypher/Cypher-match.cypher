@@ -25,9 +25,14 @@ RETURN n;
 // Node with not this label
 MATCH (n:!Movie)
 RETURN labels(n) AS label, count(n) AS labelCount;
-// Multiple match patterns
+// Multiple MATCH clause
 MATCH (h:Human)-[:HAS_PET]->(:Animal {color: "Brown"})
 MATCH (s:Store)<-[r1]-(h)-[r2]->(c:Location {category: "cinema"})
+WHERE h.human_id = "xxx" AND h.age < 23
+RETURN *;
+// Multiple pattlerns for 1 MATCH clause (more efficient)
+MATCH (h:Human)-[:HAS_PET]->(:Animal {color: "Brown"}),
+	(s:Store)<-[r1]-(h)-[r2]->(c:Location {category: "cinema"})
 WHERE h.human_id = "xxx" AND h.age < 23
 RETURN *;
 

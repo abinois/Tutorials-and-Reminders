@@ -42,7 +42,9 @@ RETURN [(p:Person)-[:WORKS_FOR]->(alice) WHERE p.age > 30 | p.name || ', ' || to
 // List functions
 WITH [-1, 1, 2, 3, 4] AS l
 RETURN head(l), tail(l), last(l), size(l);
-
+// reduce()
+WITH ['Neo', '4j'] AS list
+RETURN reduce(acc = '', item IN list| acc || item) AS result;
 
 // ------------ FOREACH ------------ //
 // Mark relationships along the path

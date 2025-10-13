@@ -18,7 +18,7 @@ RETURN c.customerId, count(*) AS numberOfProduct;
 // collect()
 MATCH (p:Product)<-[:buy]-(c:Customer)
 RETURN c.customerId, collect(distinct p) AS allProducts;
-// sum()
+// avg()
 MATCH (p:Person) RETURN avg(p.age);
 // String modification: toLower() toUpper()
 MATCH (p:Person) WHERE toLower(p.name) = "john" RETURN p;
@@ -26,6 +26,16 @@ MATCH (p:Person) WHERE toLower(p.name) = "john" RETURN p;
 MATCH (p:Person)-[:EAT]->(:Animal {specie: "Fish"})
 WHERE NOT exists( (p)-[:EAT]->(:Animal {specie: "Chicken"}) )
 RETURN p;
+// Show node labels and associated property keys
+MATCH (n)
+WITH labels(n) AS labels, keys(n) AS properties
+RETURN DISTINCT labels, properties
+ORDER BY labels;
+// Show relationship types and associated property keys
+MATCH ()-[r]-()
+WITH type(r) AS types, keys(r) AS properties
+RETURN DISTINCT types, properties
+ORDER BY types;
 
 
 // --- Convert ---
@@ -45,14 +55,47 @@ RETURN p;
 // randomUUID()
 
 
+// date()
+// date().year
+// datetime()
+// time()
+
+
 // ============ Procedures ============ //
 // Procedure: https://neo4j.com/docs/operations-manual/current/procedures/
 
-SHOW PROCEDURES YIELD *;
+SHOW PROCEDURES YIELD *
 
 // ------------ DATABASE ------------ //
-CALL db.schema.visualization(); // Show Graph model
-CALL db.info() // Return database informations
-CALL db.relationshipTypes() // Return a list all relationship types
-CALL db.labels() // Return a list of all node labels
-CALL dbms.showCurrentUser() // Return user informations
+// CALL db.schema.visualization();		// Show Graph model
+// CALL db.info()						// Return database informations
+// CALL db.relationshipTypes() 			// Return a list all relationship types
+// CALL db.labels()						// Return a list of all node labels
+// CALL dbms.showCurrentUser()			// Return user informations
+// CALL db.schema.nodeTypeProperties()
+// CALL db.schema.relTypeProperties()
+
+// ------------ APOC ------------ //
+// apoc.case()
+// apoc.when()
+// apoc.cypher.doIt()
+// apoc.cypher.run()
+// apoc.cypher.runMany()
+// apoc.cypher.runManyReadOnly()
+// apoc.cypher.runSchema()
+// apoc.cypher.runTimeboxed()
+// apoc.cypher.runWrite()
+// apoc.cypher.runFirstColumnMany()
+// apoc.cypher.runFirstColumnSingle()
+// apoc.do.case()
+// apoc.do.when()
+// apoc.export.csv.query()
+// apoc.export.cypher.query()
+// apoc.export.graphml.query()
+// apoc.export.json.query()
+// apoc.graph.fromCypher()
+// apoc.periodic.commit()
+// apoc.periodic.iterate()
+// apoc.periodic.repeat()
+// apoc.periodic.submit()
+// apoc.trigger.add()
