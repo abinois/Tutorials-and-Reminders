@@ -32,3 +32,17 @@ with driver.session(database="neo4j") as session:
 	for record in results:
 		print(record['title'])
 driver.close()
+
+# Other example of running a cypher query with parameters
+def get_actors(tx, movieTitle): # (1)
+	result = tx.run("""
+		MATCH (p:Person)-[:ACTED_IN]->(m:Movie)
+		WHERE m.title = $title
+		RETURN p
+	""", title=movieTitle)
+
+	# Access the `p` value from each record
+	return [ record["p"] for record in result ]
+
+with driver.session() as session:
+    result = session.read_transaction(get_actors, movieTitle="Toy Story")

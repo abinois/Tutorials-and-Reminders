@@ -36,7 +36,9 @@ MATCH ()-[r]-()
 WITH type(r) AS types, keys(r) AS properties
 RETURN DISTINCT types, properties
 ORDER BY types;
-
+// Start node / End node of a relationship
+MATCH (a)-[r]-(b)
+RETURN startNode(r), endNode(r);
 
 // --- Convert ---
 // toString() toInteger() toFloat() toBoolean()
@@ -54,17 +56,21 @@ ORDER BY types;
 
 // randomUUID()
 
+// --- Date ---
+// date() date().year date().day date("2024-03-10")
+// datetime() datetime().hour datetime("2021-05-24T18:55:36")
+// time() time().minute time("22:37")
 
-// date()
-// date().year
-// datetime()
-// time()
+// --- Duration ---
+// duration.between(date1, date2)		// Return duration between 2 dates or times
+// duration.inDays(date1, date2).days	// Return duration in days
+// date1 + duration({months: 6})		// Add a duration to a date
 
 
 // ============ Procedures ============ //
 // Procedure: https://neo4j.com/docs/operations-manual/current/procedures/
 
-SHOW PROCEDURES YIELD *
+SHOW PROCEDURES YIELD *;
 
 // ------------ DATABASE ------------ //
 // CALL db.schema.visualization();		// Show Graph model
@@ -76,6 +82,7 @@ SHOW PROCEDURES YIELD *
 // CALL db.schema.relTypeProperties()
 
 // ------------ APOC ------------ //
+// apoc.meta.nodeTypeProperties()		// Show nodes with property names and type
 // apoc.case()
 // apoc.when()
 // apoc.cypher.doIt()
@@ -99,3 +106,15 @@ SHOW PROCEDURES YIELD *
 // apoc.periodic.repeat()
 // apoc.periodic.submit()
 // apoc.trigger.add()
+// apoc.temporal.format()				// Formating date
+// apoc.toISO8601()						// Formating date
+// apoc.temporal.toZonedTemporal()
+
+// ============ VECTOR INDEX SEARCH ============ //
+WITH genai.vector.encode(
+    "Why do LLMs get things wrong?",
+    "OpenAI",
+    { token: "sk-..." }) AS userEmbedding
+CALL db.index.vector.queryNodes('chunkVector', 6, userEmbedding)
+YIELD node, score
+RETURN node.text, score

@@ -19,6 +19,8 @@ RETURN directors;
 // OR on node labels
 MATCH (n:Movie|Person) // Movie OR Person nodes
 RETURN n.name AS name, n.title AS title;
+// TrainStation AND BusStation OR StationGroup
+MATCH (n:(TrainStation&BusStation)|StationGroup) RETURN n;
 // OR on node labels dinamically : $any()
 MATCH (n:$any(["Movie", "Actor"])) // -> equivalent as an OR : MATCH (n:Movie|Actor)
 RETURN n;
@@ -30,7 +32,7 @@ MATCH (h:Human)-[:HAS_PET]->(:Animal {color: "Brown"})
 MATCH (s:Store)<-[r1]-(h)-[r2]->(c:Location {category: "cinema"})
 WHERE h.human_id = "xxx" AND h.age < 23
 RETURN *;
-// Multiple pattlerns for 1 MATCH clause (more efficient)
+// Multiple pattlerns for 1 MATCH clause (more efficient) -> graph pattern
 MATCH (h:Human)-[:HAS_PET]->(:Animal {color: "Brown"}),
 	(s:Store)<-[r1]-(h)-[r2]->(c:Location {category: "cinema"})
 WHERE h.human_id = "xxx" AND h.age < 23

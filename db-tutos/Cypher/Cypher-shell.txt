@@ -25,8 +25,10 @@
 :params							# Show parameters
 :param list						# Show parameters (idem)
 :param clear					# Delete all parameters
-:param name => "value"			# Set a parameter
-:param {						# Set multiple parameters with a map
+:params {}						# Delete all parameters
+:param name => "value"			# Set a parameter and force value type
+:param name: "value"			# Set a parameter
+:params  {						# Set multiple parameters with a map
 	alias: 'Robin',
 	born: date('1940-03-20')
 }
