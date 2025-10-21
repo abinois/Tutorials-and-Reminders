@@ -1,0 +1,25 @@
+
+Install : https://github.com/nvie/gitflow/wiki/Installation
+
+Branches schema:
+---MAIN-------->
+---HOTFIX------>
+---RELEASE----->
+---DEVELOP----->
+---FEATURE----->
+
+
+# --- Init
+git flow init									// creates repository and branches
+
+# --- Develop
+git flow feature start feature_branch_name		// creates new feature branch from developing branch and moves inside it
+git flow feature finish feature_branch_name		// merges feature branch into developing branch and deletes it
+
+# --- Release
+git flow release start '0.1.0'					// creates new release branch from developing branch and moves inside it
+git flow release finish '0.1.0'					// merges release branch into main and developing branches and deletes it
+
+# --- Fix
+git flow hotfix start hotfix_branch_name		// creates new fix branch from main branch and moves inside it
+git flow hotfix finish hotfix_branch_name		// merges fix branch into main and developing branches and deletes it

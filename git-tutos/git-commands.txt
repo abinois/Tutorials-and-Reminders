@@ -1,3 +1,4 @@
+Doc: https://git-scm.com/docs
 
 ====== Configuration ======
 
@@ -47,7 +48,7 @@ git push						// push staged changes to repository
 git push --set-upstream origin <branchname>	// push to specific branch
 
 ### Undo - - - - - - - - - - - - -
-git checkout					// undo all modifications
+git checkout	 				// undo all modifications
 git checkout <filename>			// undo modifications
 git reset HEAD <filename>		// untrack file
 git reset --hard HEAD^			// undo last commit on current branch and return to previous commit state (delete permanently !)
@@ -55,19 +56,27 @@ git reset --hard ca83a6df		// apply the removed commit with hash ca83a6df on cur
 git reset --mixed HEAD~			// undo last commit but don't delete changes, just unstage them instead
 git reset --soft				// go to specific commit state without deleting anything
 git revert HEAD^				// undo last commit by creating a new one (safe : no historic modifications)
-git commit --amend -m <new message> // change message of last commit
+git commit --amend -m <new message> // update last commit and change message
 git checkout <commit_ID>		// return to that specific commit state
-git rebase						//
 
 ### Branch - - - - - - - - - - - -
 git checkout <branchname>		// change branch
+git checkout -b <branchname>	// create new branch and go to that branch
 git branch <branchname>			// create new branch
 git branch -d <branchname>		// delete branch (-D to force)
 git merge <branchname>			// merge branchname into current branch
 git cherry-pick d356940 de966d4 // merge only specific commits (but duplicate them)
+git rebase <branchname>			// move commits of current branch to head of <branchname>
 
 ### Save - - - - - - - - - - - - -
 git stash						// save changes and return to a clean branch
 git stash apply stash@{3}		// apply changes saved in stash number 3
+git stash pop					// apply last saved changes
 
 git fetch						//
+git bisect start				// start reviewing commits
+git bisect reset				// end reviewing commits
+git bisect bad <commit_ID>		// specify a bad commit
+git bisect bad 					// invalidate commit
+git bisect good <commit_ID>		// specify a good commit
+git bisect good					// validate a commit
