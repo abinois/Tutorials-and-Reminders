@@ -1,0 +1,54 @@
+Documentation : https://docs.docker.com/
+
+# == Build =======================================
+# --- build image
+ > docker build -t <image_name> .
+
+-> vous pouvez changer "image_name" par n'importe quel nom.
+-> "." correspond au path pour trouver le Dockerfile
+
+# --- download image from docker hub
+ > docker pull <image_name>
+
+
+# == Run =========================================
+# --- run container
+ > docker run --rm -p 5014:5014 -it <image_name>
+
+-> mettez le nom exacte de l'image mise dans le build juste avant.
+-> -p : specifier les ports
+-> -it : interactive mode
+-> -d : run en arrière plan
+
+> docker run -it <image_name> /bin/sh
+-> run l'image en mode interactive + lance un shell
+pour pouvoir naviguer dans les fichiers du container.
+
+# --- Stop container
+ > docker stop <container_ID>
+
+
+# == Clean =======================================
+# --- rm image
+ > docker rmi <image_name_or_ID>
+# --- rm container
+ > docker rm <container_ID>
+# --- clear cache
+ > docker builder prune -f -a
+# --- delete everything : (container, images, volumes and cache)
+ > docker system prune -a --volumes
+
+
+# == Infos =======================================
+# --- show memory use of Docker
+ > docker system df
+# --- show images id
+ > docker images -a
+# --- show containers
+ > docker ps -a
+# -- search for images
+ > docker search <image_name>
+# --- show image layers
+ > docker image history <image_name>
+# --- inspect container
+ > docker inspect <container_ID>

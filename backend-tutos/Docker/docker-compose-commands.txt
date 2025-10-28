@@ -1,0 +1,8 @@
+docker-compose --version			# Show version
+docker-compose pull					# Pull images
+docker-compose up					# Run stack
+docker-compose down					# Stop and rm stack
+docker-compose stop					# Stop stack
+docker-compose ps					# Show running containers
+docker-compose logs -f --tail 5		# Show container logs
+docker-compose config				# Verify syntax of docker-compose.yaml file
