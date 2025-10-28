@@ -1,0 +1,24 @@
+# Install
+ > pip install -U pytest
+ > pytest --version
+
+# Run tests recursively from current directory
+ > pytest
+# -> Search for test_*.py or *_test.py files
+#	 Inside these files, search for 'test' prefixed functions
+#	 'test' prefixed methods inside 'Test' prefixed classes
+
+# Run tests recursively from specified directory
+ > pytest tests/data/
+
+# In quiet mode
+ > pytest -q test_file.py
+
+# Exclude some directories and files
+ > pytest --ignore=tests/old/ --ignore=tests/date/test_number6.py
+
+# Show builtin fixtures
+ > pytest --fixtures
+
+# Handling the 'command not found' error
+ > python3 -m pytest
