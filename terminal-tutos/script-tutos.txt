@@ -5,3 +5,4 @@ $$						// process ID
 $?						// exit status of last command (0 if no error)
 $!						// process ID of last background job
 $RANDOM					// random number
+$1, $2, ...				// script's positional arguments (= argv)

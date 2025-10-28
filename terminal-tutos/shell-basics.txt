@@ -11,31 +11,41 @@ basename				// return file (or directory) name without path
 whoami					// show current user
 cd						// change directory
 ls						// list directory
+clear					// clear terminal
+history					// show recently used commands
+date					// show current date
+
 cp mv rm				// copy move remove
 touch mkdir				// create file, create directory
+
 echo					// display in console
 printf					// display in console with formating options
 tee						// copies standard input to standard output, making a copy in zero or more files
 cat less more			// show file content
 head					// displays the first 10 lines of a file
 tail					// displays the last 10 lines of a file
+diff					// show differences between to files
+
 ipconfig				// view and control IP configuration state
 df						// show disk free space
 du						// show disk usage
-diff					// show differences between to files
-chmod					// change permissions
+
 env						// show environment variables
 export					// export a variable as an environment variable
 set						// show all variables and functions
 unset					// remove variable
+
+chmod					// change permissions
 sudo					// super user do
+
 wc						// word count
 sed						// stream editor
+uniq					// remove duplicate lines
+sort					// sort lines
+
 exit					// exit terminal or log out ssh conexion
-clear					// clear terminal
-history					// show recently used commands
 kill					// kill process
 ps						// process status
+
 curl					// transfer data from or to a server
 sleep					// delay process execution
-date					// show current date
